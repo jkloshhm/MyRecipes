@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.example.guojian.weekcook.R;
@@ -21,7 +22,7 @@ import com.example.guojian.weekcook.adapter.ParentClassAdapter;
 import com.example.guojian.weekcook.bean.ChildrenClassBean;
 import com.example.guojian.weekcook.bean.ParentClassBean;
 import com.example.guojian.weekcook.utils.GetJsonUtils;
-import com.example.guojian.weekcook.utils.HeaderGridView;
+import com.example.guojian.weekcook.utils.GridViewWithHeaderAndFooter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,10 +40,11 @@ public class ClassFragment extends Fragment {
     private static List<ParentClassBean> parentClassBeenList;
     private static List<ChildrenClassBean> childrenClassBeenList;
     private static Context context;
+    private LinearLayout mLoadingLinearLayout, mParentLinearLayout, mChildrenLinearLayout;
     private String TAG = "guojian_CookDemo";
     private Button mButtonSearch, mButtonClass;
     private ListView mListViewParent, mListViewChildren;
-    private HeaderGridView mGridViewChildren;
+    private GridViewWithHeaderAndFooter mGridViewChildren;
     private ParentClassAdapter parentClassAdapter;
     private ChildrenClassAdapter childrenClassAdapter;
     final Handler handler = new Handler() {
@@ -136,9 +138,15 @@ public class ClassFragment extends Fragment {
         View mClassView = inflater.inflate(R.layout.fragment_class, container, false);
         //LayoutInflater mLayoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View headerView = inflater.inflate(R.layout.layout_class_children_header, container, false);
+        View footerView = inflater.inflate(R.layout.layout_class_children_footer, container, false);
+
+        mLoadingLinearLayout = (LinearLayout) mClassView.findViewById(R.id.ll_loading);
+        mParentLinearLayout = (LinearLayout) mClassView.findViewById(R.id.ll_parent_class);
+        mChildrenLinearLayout = (LinearLayout) mClassView.findViewById(R.id.ll_children_class);
+
         mListViewParent = (ListView) mClassView.findViewById(R.id.lv_parent_class);
         //mListViewChildren = (ListView) mClassView.findViewById(R.id.lv_children_class);
-        mGridViewChildren = (HeaderGridView) mClassView.findViewById(R.id.lv_children_class);
+        mGridViewChildren = (GridViewWithHeaderAndFooter) mClassView.findViewById(R.id.lv_children_class);
         parentClassBeenList = new ArrayList<>();
         new Thread(new Runnable() {
             @Override
@@ -154,6 +162,7 @@ public class ClassFragment extends Fragment {
             }
         });
         mGridViewChildren.addHeaderView(headerView);
+        mGridViewChildren.addFooterView(footerView);
         mGridViewChildren.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -174,7 +183,9 @@ public class ClassFragment extends Fragment {
         mGridViewChildren.setAdapter(childrenClassAdapter);
         parentClassAdapter.setSelectItem(position);
         parentClassAdapter.notifyDataSetInvalidated();
+        mLoadingLinearLayout.setVisibility(View.GONE);
+        mParentLinearLayout.setVisibility(View.VISIBLE);
+        mChildrenLinearLayout.setVisibility(View.VISIBLE);
     }
-
 
 }
