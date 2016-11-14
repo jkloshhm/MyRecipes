@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Cook</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="chat">搜索</string>
+    <string name="contacts">分类</string>
+    <string name="discovery">发现</string>
+    <string name="me">我的</string>
+    <string name="me_name">Mary</string>
+    <string name="me_collection">我的收藏</string>
+    <string name="me_my_information">个人资料</string>
+    <string name="me_settings">设置</string>
+    <string name="me_share_app">把APP推荐给朋友</string>
+
+
+    <!--  Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

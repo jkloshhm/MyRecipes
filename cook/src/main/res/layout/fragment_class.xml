@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal">
+
+
+
+    <LinearLayout
+        android:layout_width="105dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/lv_parent_class"
+            android:layout_width="105dp"
+            android:layout_height="match_parent"
+            android:choiceMode="singleChoice"
+            android:divider="@null"
+            android:scrollbars="none" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/gray_class_background"
+        android:orientation="vertical">
+
+        <com.example.guojian.weekcook.utils.HeaderGridView
+            android:id="@+id/lv_children_class"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fadingEdge="vertical"
+            android:horizontalSpacing="20dp"
+            android:numColumns="2"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:scrollbars="none"
+            android:verticalSpacing="20dp" />
+
+
+    </LinearLayout>
+</LinearLayout>
+
+

@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_mean_line"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_mean_line"/>
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/gray_mean_background"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_search"
+            android:checked="true"
+            android:text="@string/chat"
+            android:drawableTop="@drawable/rb_search_selector"
+            style="@style/style_RadioButton"/>
+
+        <RadioButton
+            android:id="@+id/rb_class"
+            android:text="@string/contacts"
+            android:drawableTop="@drawable/rb_class_selector"
+            style="@style/style_RadioButton"/>
+
+
+        <RadioButton
+            android:id="@+id/rb_me"
+            android:text="@string/me"
+            android:drawableTop="@drawable/rb_me_selector"
+            style="@style/style_RadioButton"/>
+    </RadioGroup>
+
+
+</LinearLayout>
