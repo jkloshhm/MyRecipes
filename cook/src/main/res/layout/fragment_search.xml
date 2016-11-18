@@ -2,66 +2,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context="com.example.guojian.weekcook.activity.MainActivity">
 
-    <!--<FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="47dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="15dp"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="请输入中文菜名"
-                android:lines="1"
-                android:layout_gravity="center"
-                android:background="@drawable/shape"
-                android:textColorHint="@color/gray_search_hint"
-                android:textSize="14sp"
-                android:imeOptions="actionSearch"/>
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/ll_search"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:layout_gravity="end"
-            android:paddingRight="15dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_gravity="center_vertical|end"
-                android:id="@+id/btn_show"
-                android:layout_width="22dp"
-                android:layout_height="23dp"
-                android:src="@mipmap/img_search" />
-        </FrameLayout>
-
-    </FrameLayout>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="47dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/shape"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -71,13 +24,14 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/name"
+                android:id="@+id/et_search_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="请输入中文菜名"
-                android:lines="1"
                 android:layout_gravity="center"
                 android:background="@null"
+                android:hint="请输入中文菜名"
+                android:lines="1"
+                android:singleLine="true"
                 android:textColorHint="@color/gray_search_hint"
                 android:textSize="14sp" />
         </LinearLayout>

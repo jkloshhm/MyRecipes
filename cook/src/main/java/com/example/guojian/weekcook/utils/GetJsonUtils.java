@@ -25,7 +25,7 @@ public class GetJsonUtils {
         apiRequest.setPath("/recipe/search");
         apiRequest.setMethod(HttpMethod.GET);
         apiRequest.addQuery("keyword", name);
-        apiRequest.addQuery("num", "2");
+        apiRequest.addQuery("num", "50");
         apiRequest.setTrustServerCertificate(true);
         apiRequest.setTimeout(10000);
         rpcService.call(apiRequest, new ApiResponseCallback() {

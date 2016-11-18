@@ -3,7 +3,7 @@
     android:layout_width="97.5dp"
     android:layout_height="29dp"
     android:gravity="center"
-    android:background="@drawable/shape_children">
+    android:background="@drawable/children_class_selector">
 
     <TextView
         android:id="@+id/tv_children_item"

@@ -9,13 +9,16 @@
     <string name="discovery">发现</string>
     <string name="me">我的</string>
     <string name="me_name">Mary</string>
-    <string name="me_collection">我的收藏</string>
+    <string name="my_collection">我的收藏</string>
     <string name="me_my_information">个人资料</string>
     <string name="me_settings">设置</string>
     <string name="me_share_app">把APP推荐给朋友</string>
     <string name="text_loading">正在加载…</string>
-
+    <string name="no_data_massage">sorry,此分类暂无菜谱…</string>
+    <string name="cook_process">---制作步骤---</string>
 
     <!--  Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
 </resources>

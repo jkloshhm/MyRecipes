@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <TextView
+        android:layout_gravity="center_vertical"
+        android:id="@+id/tv_item_process_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/chat" />
+    <ImageView
+        android:layout_gravity="center_vertical"
+        android:id="@+id/iv_item_process_img"
+        android:paddingTop="6dp"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:gravity="center_horizontal"
+        android:src="@mipmap/image_demo"
+        android:text="@string/chat" />
+
+<!--    <com.example.guojian.weekcook.utils.CircleImageView
+        android:id="@+id/iv_item_process_img"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:paddingTop="10dp"
+        android:src="@mipmap/img_me"
+        app:civ_border_color="@color/gray"
+        app:civ_border_width="0dp" />-->
+<!--    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>-->
+
+</LinearLayout>
