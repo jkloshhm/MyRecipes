@@ -9,8 +9,8 @@
     <LinearLayout
         android:id="@+id/ll_webView_title"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white"
+        android:layout_height="48dp"
+        android:background="@color/red_theme"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -27,7 +27,7 @@
                 android:id="@+id/bn_back_cook_list"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:background="@mipmap/back3" />
+                android:background="@mipmap/back_normal" />
         </LinearLayout>
 
         <LinearLayout

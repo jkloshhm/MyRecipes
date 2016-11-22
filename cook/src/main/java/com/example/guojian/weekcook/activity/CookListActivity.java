@@ -17,6 +17,8 @@ import com.example.guojian.weekcook.adapter.CookListAdapter;
 import com.example.guojian.weekcook.bean.CookBean;
 import com.example.guojian.weekcook.bean.MaterialBean;
 import com.example.guojian.weekcook.bean.ProcessBean;
+import com.example.guojian.weekcook.dao.DBServices;
+import com.example.guojian.weekcook.dao.MyDBServiceUtils;
 import com.example.guojian.weekcook.utils.GetJsonUtils;
 
 import org.json.JSONArray;
@@ -29,11 +31,16 @@ public class CookListActivity extends Activity {
     private static List<CookBean> cookBeanList = new ArrayList<>();
     private static List<MaterialBean> materialBeanList = null;
     private static List<ProcessBean> processBeanList = null;
-    private String TAG = "jkloshhm_CookDemo";
+    private static DBServices db;
+    private String id_cook;
+    private CookBean cookBean01, cookBeanSql;
+    private String TAG = "jkloshhm_CookListActivity";
     private TextView mNameTextView;
     private ListView mLisview;
     private CookListAdapter mCookListAdapter;
     private LinearLayout mLoadingLinearLayout, mNoMassageLinearLayout, mBackLinearLayout;
+    private ArrayList<CookBean> cookBeenArrayList;
+    private ArrayList<String> cookIdList = new ArrayList<>();
     final Handler handlerClass = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -58,12 +65,32 @@ public class CookListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG, "CookListActivity ____________onCreate()");
+
         setContentView(R.layout.activity_cook_list);
         mNameTextView = (TextView) findViewById(R.id.tv_cook_name);
         mLisview = (ListView) findViewById(R.id.lv_cook_list);
         mLoadingLinearLayout = (LinearLayout) findViewById(R.id.ll_loading_list);
         mNoMassageLinearLayout = (LinearLayout) findViewById(R.id.ll_no_data_massage);
         mBackLinearLayout = (LinearLayout) findViewById(R.id.ll_back_class_home);
+        mBackLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        Log.i(TAG, "CookListActivity ____________onResume()");
+        super.onResume();
+
+
+
+    }
+
+    private void initJsonData() {
         Intent intent = this.getIntent();
         final String CookType = intent.getStringExtra("CookType");
         final String classId = intent.getStringExtra("classId");
@@ -74,38 +101,30 @@ public class CookListActivity extends Activity {
             public void run() {
                 if (CookType.equals("GetDataByClassId")) {
                     GetJsonUtils.GetDataByClassId(handlerClass, classId);
-                }else if(CookType.equals("GetDataBySearchName")){
-                    GetJsonUtils.GetDataBySearchName(handlerClass,name);
-
+                } else if (CookType.equals("GetDataBySearchName")) {
+                    GetJsonUtils.GetDataBySearchName(handlerClass, name);
                 }
 
             }
         }).start();
-        mCookListAdapter = new CookListAdapter(this, cookBeanList);
-        mBackLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        mLisview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CookBean cookBean01 = cookBeanList.get(position);
-                try {
-                    Intent intent = new Intent(CookListActivity.this, DetailsActivity.class);
-                    Bundle b = new Bundle();
-                    b.putSerializable("cookBean01", cookBean01);
-                    intent.putExtras(b);
-                    startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
-    private void getDataAndUpdateUI(String data){
+
+    private void initDB() {
+        try {
+            db = MyDBServiceUtils.getInstance(this);
+            cookBeenArrayList = MyDBServiceUtils.getAllObject(db);
+            for (int i = 0; i < cookBeenArrayList.size(); i++) {
+                String cook_id = cookBeenArrayList.get(i).getId_cook();
+                this.cookIdList.add(cook_id);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void getDataAndUpdateUI(String data) {
         try {
             cookBeanList.clear();
             JSONObject dataJsonObject = new JSONObject(data);
@@ -123,7 +142,7 @@ public class CookListActivity extends Activity {
                 JSONArray listJsonArray = resultJsonObject.getJSONArray("list");
                 for (int i = 0; i < listJsonArray.length(); i++) {
                     JSONObject cookJsonObject = listJsonArray.getJSONObject(i);
-                    String id_cook = cookJsonObject.getString("id");
+                    id_cook = cookJsonObject.getString("id");
                     String classid_cook = cookJsonObject.getString("classid");
                     String name_cook = cookJsonObject.getString("name");
                     String peoplenum = cookJsonObject.getString("peoplenum");
@@ -132,6 +151,7 @@ public class CookListActivity extends Activity {
                     String content = cookJsonObject.getString("content");
                     String pic = cookJsonObject.getString("pic");
                     String tag = cookJsonObject.getString("tag");
+                    String maryString = "mary";
                     JSONArray materialArray = cookJsonObject.getJSONArray("material");
                     JSONArray processJsonArray = cookJsonObject.getJSONArray("process");
                     materialBeanList = new ArrayList<>();
@@ -149,18 +169,66 @@ public class CookListActivity extends Activity {
                                 processJsonObject.getString("pcontent"),
                                 processJsonObject.getString("pic")));
                     }
-                    cookBeanList.add(new CookBean(id_cook, classid_cook, name_cook,
-                            peoplenum, preparetime,
-                            cookingtime, content, pic,
-                            tag, materialBeanList, processBeanList));
+
+                    if (cookIdList.contains(id_cook)) {
+                        for (int j = 0; j < cookBeenArrayList.size(); j++) {
+                            if (cookBeenArrayList.get(j).getId_cook().equals(id_cook)) {
+                                cookBeanSql = cookBeenArrayList.get(j);
+                            }
+                        }
+                        cookBeanList.add(cookBeanSql);
+                        Log.i(TAG, "if------------if-----------");
+                    } else {
+                        cookBeanList.add(new CookBean(id_cook, classid_cook, name_cook,
+                                peoplenum, preparetime,
+                                cookingtime, content, pic,
+                                tag, materialBeanList, processBeanList, maryString));
+                        Log.i(TAG, "else------------else-----------");
+                    }
                 }
+                mLisview.setAdapter(mCookListAdapter);
                 mLoadingLinearLayout.setVisibility(View.GONE);
                 mLisview.setVisibility(View.VISIBLE);
-                mLisview.setAdapter(mCookListAdapter);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+
+    @Override
+    protected void onRestart() {
+        Log.i(TAG, "CookListActivity ____________onRestart()");
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStart() {
+        Log.i(TAG, "CookListActivity ____________onStart()");
+        super.onStart();
+        initJsonData();
+        initDB();
+        mCookListAdapter = new CookListAdapter(this, cookBeanList);
+        mLisview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                cookBean01 = cookBeanList.get(position);
+                try {
+                    Intent intent = new Intent(CookListActivity.this, DetailsActivity.class);
+                    Bundle b = new Bundle();
+                    b.putSerializable("cookBean01", cookBean01);
+                    intent.putExtras(b);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onStop() {
+        Log.i(TAG, "CookListActivity ____________onStop()");
+        super.onStop();
+    }
 }

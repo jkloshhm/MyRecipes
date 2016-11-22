@@ -13,8 +13,7 @@
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:label="@string/app_name">
         <meta-data
             android:name="com.alibaba.apigateway.appKey"
             android:value="23495613" />
@@ -24,16 +23,22 @@
 
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CookListActivity" />
-        <activity android:name=".activity.DetailsActivity" />
-        <activity android:name=".activity.CollectionActivity"></activity>
+        <activity
+            android:name=".activity.CookListActivity"
+            android:theme="@style/AppTheme_red" />
+        <activity android:name=".activity.DetailsActivity"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".activity.CollectionActivity"
+            android:theme="@style/AppTheme_red" />
     </application>
 
 </manifest>

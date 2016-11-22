@@ -9,8 +9,8 @@
     <LinearLayout
         android:id="@+id/ll_webView_title"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white"
+        android:layout_height="48dp"
+        android:background="@color/red_theme"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -20,14 +20,14 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="13dp"
-            android:paddingRight="13dp">
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <ImageView
                 android:id="@+id/bn_back_cook_list"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@mipmap/back3" />
+                android:layout_width="9dp"
+                android:layout_height="16.5dp"
+                android:background="@mipmap/back_black" />
         </LinearLayout>
 
         <LinearLayout
@@ -41,24 +41,24 @@
                 android:id="@+id/tv_cook_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="清蒸鲤鱼"
-                android:textSize="16sp" />
+                android:text="@string/me_my_information"
+                android:textSize="18sp"
+                android:textColor="@color/white"/>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_invisible"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="13dp"
-            android:paddingRight="13dp">
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@mipmap/back3"
-                android:visibility="invisible" />
+                android:layout_width="9dp"
+                android:layout_height="16.5dp"
+                android:background="@mipmap/back_black"
+                android:visibility="invisible"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -104,9 +104,10 @@
         <ListView
             android:visibility="gone"
             android:id="@+id/lv_cook_list"
+            android:dividerHeight="0.5dp"
+            android:divider="@color/gray_me_line"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent"/>
     </LinearLayout>
 
 

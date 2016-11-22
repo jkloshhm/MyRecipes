@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.guojian.weekcook.R;
 import com.example.guojian.weekcook.bean.CookBean;
+import com.example.guojian.weekcook.bean.MaterialBean;
 import com.example.guojian.weekcook.utils.ImageLoaderUtil;
 
 import java.util.List;
@@ -30,7 +31,6 @@ public class CookListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        //Log.i("guojian", "------CookListAdapter--------------cookBeanList.size()====" + cookBeanList.size());
         return cookBeanList.size();
     }
 
@@ -47,26 +47,39 @@ public class CookListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        if (convertView ==null ){
+        if (convertView == null) {
             holder = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.cook_list_item,null);
-            holder.mTextViewName =(TextView) convertView.findViewById(R.id.tv_item_cook_name);
-            holder.imageView =(ImageView) convertView.findViewById(R.id.iv_item_cook_pic);
+            convertView = LayoutInflater.from(context).inflate(R.layout.cook_list_item, null);
+            holder.mCookName = (TextView) convertView.findViewById(R.id.tv_item_cook_name);
+            holder.mCookMaterial = (TextView) convertView.findViewById(R.id.tv_item_cook_material);
+            holder.mCookingTime = (TextView) convertView.findViewById(R.id.tv_item_cook_time);
+            holder.imageView = (ImageView) convertView.findViewById(R.id.iv_item_cook_pic);
             convertView.setTag(holder);
-        }else {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
         CookBean cookBean = cookBeanList.get(position);
         Log.i("guojian", "------CookListAdapter--------------->> cookBean.toString();====" + cookBean.toString());
-        holder.mTextViewName.setText(cookBean.getName_cook());
+        holder.mCookName.setText(cookBean.getName_cook());
+        List<MaterialBean> materialBeanList = cookBean.getMaterialBeen();
+        StringBuilder material = new StringBuilder("");
+        for (int i = materialBeanList.size() - 1; i >= 0; i--) {
+            MaterialBean materialBean = materialBeanList.get(i);
+            material.append(materialBean.getMname() + ", ");
+        }
+
+        holder.mCookMaterial.setText(material);
+        holder.mCookingTime.setText("烹饪时间: " + cookBean.getCookingtime());
         String image_url = cookBean.getPic();
 
-        ImageLoaderUtil.setPicBitmap2(holder.imageView,image_url);
+        ImageLoaderUtil.setPicBitmap2(holder.imageView, image_url);
         return convertView;
     }
 
-    class ViewHolder{
-        private TextView mTextViewName;
+    class ViewHolder {
+        private TextView mCookName;
+        private TextView mCookMaterial;
+        private TextView mCookingTime;
         private ImageView imageView;
     }
 }

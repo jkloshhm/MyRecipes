@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/ll_details_title"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -20,14 +20,14 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="13dp"
-            android:paddingRight="13dp">
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <ImageView
                 android:id="@+id/bn_back_details"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@mipmap/back3" />
+                android:layout_width="9dp"
+                android:layout_height="16.5dp"
+                android:background="@mipmap/back_gray" />
         </LinearLayout>
 
         <LinearLayout
@@ -37,27 +37,41 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <TextView
+            <View
                 android:id="@+id/tv_details_title_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/me_name"
-                android:textSize="16sp" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_collect_the_cook_data"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:paddingLeft="13dp"
-            android:paddingRight="13dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@mipmap/back3" />
+                android:id="@+id/iv_collection_img"
+                android:layout_width="20dp"
+                android:layout_height="20.5dp"
+                android:background="@mipmap/collection_gray" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_share_the_cook_data"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp">
+
+            <ImageView
+                android:layout_width="19dp"
+                android:layout_height="21dp"
+                android:background="@mipmap/share" />
         </LinearLayout>
     </LinearLayout>
 
@@ -88,53 +102,139 @@
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
 
                     <TextView
                         android:id="@+id/tv_details_cook_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:paddingTop="16dp"
+                        android:paddingTop="30dp"
                         android:text="水煮鱼"
-                        android:textSize="28sp" />
+                        android:textColor="@color/black"
+                        android:textSize="23sp"
+                        android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tv_details_cook_content"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingTop="16dp"
-                        android:text="@string/me" />
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp">
 
-                    <TextView
-                        android:id="@+id/tv_details_cook_peoplenum"
+                        <TextView
+                            android:id="@+id/tv_details_cook_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingTop="21.5dp"
+                            android:text="@string/me"
+                            android:textColor="@color/gray_content_color"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="29dp"
+                        android:background="@color/gray_me_line" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingTop="16dp" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp">
 
-                    <TextView
-                        android:id="@+id/tv_details_cook_preparetime"
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="21dp"
+                                android:layout_height="15dp"
+                                android:src="@mipmap/img_people_num" />
+
+                            <TextView
+                                android:id="@+id/tv_details_cook_peoplenum"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:paddingLeft="5dp"
+                                android:textColor="@color/gray_children_text"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:src="@mipmap/img_cooking_time" />
+
+                            <TextView
+                                android:id="@+id/tv_details_cook_cookingtime"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:paddingLeft="5dp"
+                                android:textColor="@color/gray_children_text"
+                                android:textSize="13sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/gray_me_line" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingTop="16dp" />
+                        android:orientation="horizontal"
+                        android:paddingTop="15dp">
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15.5dp"
+                            android:src="@mipmap/img_cook_tag" />
+
+                        <TextView
+                            android:id="@+id/tv_details_cook_tag"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:paddingLeft="5dp"
+                            android:textColor="@color/gray_children_text"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/gray_me_line" />
 
                     <TextView
-                        android:id="@+id/tv_details_cook_cookingtime"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:paddingTop="16dp" />
-
-                    <TextView
-                        android:id="@+id/tv_details_cook_tag"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingTop="16dp" />
+                        android:paddingTop="30.5dp"
+                        android:text="@string/cook_material_list"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -143,25 +243,75 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="15dp"
                 android:scrollbars="vertical">
 
                 <com.example.guojian.weekcook.MyListView
                     android:id="@+id/lv_listview_material"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:divider="@color/gray_me_line"
+                    android:dividerHeight="0.5dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray_me_line" />
 
                 <TextView
+                    android:id="@+id/tv_cook_process"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="8dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="30dp"
                     android:text="@string/cook_process"
-                    android:textSize="16sp" />
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_cook_total_process"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="共9步,点击进入大图"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
 
                 <com.example.guojian.weekcook.MyListView
+                    android:paddingTop="10dp"
+                    android:divider="@null"
                     android:id="@+id/lv_listview_process"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="20dp">
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray_me_line"/>
+                <TextView
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cook_details_dixian"
+                    android:textColor="@color/gray_cccccc"/>
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray_me_line"/>
             </LinearLayout>
 
 

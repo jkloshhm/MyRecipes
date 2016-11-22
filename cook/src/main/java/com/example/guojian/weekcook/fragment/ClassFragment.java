@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,8 +51,8 @@ public class ClassFragment extends Fragment {
             String classType = jsonBundle.getString("classType");
             String jsonErrorMessage = jsonBundle.getString("errorMessage");
             String jsonData = jsonBundle.getString("stringBody");
-            Log.i(TAG, "--------->>jsonData====" + jsonData);
-            Log.i(TAG, "--------->>jsonErrorMessage====" + jsonErrorMessage);
+            //Log.i(TAG, "--------->>jsonData====" + jsonData);
+            //Log.i(TAG, "--------->>jsonErrorMessage====" + jsonErrorMessage);
             if (jsonData != null && jsonErrorMessage == null) {
                 if (classType != null && classType.equals("GetDataClass")) {//分类名称
                     getDataAndUpdateUI(jsonData);
@@ -105,7 +104,7 @@ public class ClassFragment extends Fragment {
                             list_children.getString("name"),
                             list_children.getString("parentid"));
                     childrenClassBeenList.add(childrenClassBean);
-                    Log.i(TAG, "name=========" + list_children.getString("name"));
+                    //Log.i(TAG, "name=========" + list_children.getString("name"));
                 }
                 parentClassBean = new ParentClassBean(
                         childrenClassBeenList,
@@ -117,7 +116,7 @@ public class ClassFragment extends Fragment {
                         className_parent + "-" +
                         parentId_parent + "\n");
             }
-            Log.i(TAG, "S=" + s);
+            //Log.i(TAG, "S=" + s);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -14,8 +14,10 @@
     <string name="me_settings">设置</string>
     <string name="me_share_app">把APP推荐给朋友</string>
     <string name="text_loading">正在加载…</string>
-    <string name="no_data_massage">sorry,此分类暂无菜谱…</string>
-    <string name="cook_process">---制作步骤---</string>
+    <string name="no_data_massage">sorry, 暂无信息…</string>
+    <string name="cook_process">—  制作步骤  —</string>
+    <string name="cook_material_list">—  食材清单  —</string>
+    <string name="cook_details_dixian">我是有底线的</string>
 
     <!--  Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -13,7 +13,7 @@ public class MyDbHelper extends SQLiteOpenHelper {
 
     private MyDbHelper(Context context) {
         super(context, "datebase.db", null, 1);
-        // TODO Auto-generated constructor stub
+
     }
 
     public MyDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {

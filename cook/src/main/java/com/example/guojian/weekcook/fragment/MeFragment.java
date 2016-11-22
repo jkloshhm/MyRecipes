@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.guojian.weekcook.R;
 import com.example.guojian.weekcook.activity.CollectionActivity;
-import com.example.guojian.weekcook.dao.CookBeanService;
+import com.example.guojian.weekcook.dao.MyDBServiceUtils;
 
 
 /**
@@ -21,7 +21,7 @@ import com.example.guojian.weekcook.dao.CookBeanService;
  */
 public class MeFragment extends Fragment {
     private String TAG = "guojianMe_CookDemo";
-    private CookBeanService mService;
+    private MyDBServiceUtils mService;
     private Context mContext;
     private TextView mTextViewMe;
     private LinearLayout mMycollectionLinearLayout;
@@ -37,7 +37,6 @@ public class MeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_me, container, false);
         mMycollectionLinearLayout = (LinearLayout) view.findViewById(R.id.ll_my_collection);
         //mTextViewMe = (TextView) view.findViewById(R.id.tv_me);
-        //mService= new CookBeanService(mContext);
         mMycollectionLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

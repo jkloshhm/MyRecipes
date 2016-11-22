@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBServices extends SQLiteOpenHelper {
 
     public final static int version = 1;
-    public final static String dbName = "Test";
+    public final static String dbName = "Test001";
 
 
     //表里面的三个内容
@@ -27,10 +27,9 @@ public class DBServices extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // TODO Auto-generated method stub
         db.beginTransaction();
         //ŽŽœšÓÊŒþ±í
-        String create_mail_sql = "CREATE TABLE if not exists [Test]"+
+        String create_mail_sql = "CREATE TABLE if not exists [Test001]"+
                 "(_id integer primary key autoincrement, person text)";
 
         /*String create_mail_sql = "CREATE TABLE " + TABLE_NAME + " (" + ID + " INTEGER primary key autoincrement, "
@@ -42,7 +41,6 @@ public class DBServices extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // TODO Auto-generated method stub
 
     }
     //Ôö
@@ -53,10 +51,6 @@ public class DBServices extends SQLiteOpenHelper {
         db.setTransactionSuccessful();
         db.endTransaction();
     }
-
-
-
-
 
     //ÉŸ
     public void delete(String table , String whereClause , String[] whereArgs){

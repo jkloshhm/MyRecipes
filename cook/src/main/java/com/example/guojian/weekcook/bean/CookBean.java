@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by guojian on 11/15/16.
  */
-public class CookBean implements Serializable{
+public class CookBean implements Serializable {
 /*    "id": "1",
             "classid": "2",
             "name": "炸茄盒",
@@ -17,6 +17,9 @@ public class CookBean implements Serializable{
             "pic": "http:\/\/api.jisuapi.com\/recipe\/upload\/20160719\/115137_60657.jpg",
             "tag": "健脾开胃,儿童,减肥,宴请,家常菜,小吃,炸,白领,私房菜,聚会",*/
 
+    static final long serialVersionUID = 969309202303440018L;
+
+    private String real_ip;
     private String id_cook;
     private String classid_cook;
     private String name_cook;
@@ -25,19 +28,20 @@ public class CookBean implements Serializable{
     private String cookingtime;
     private String content;
     private String pic;
-    private String tag;
+    private String tag_cook;
     private List<MaterialBean> materialBeen;
     private List<ProcessBean> processBeen;
 
     public CookBean() {
     }
 
+
     public CookBean(String id_cook, String classid_cook, String name_cook,
                     String peoplenum, String preparetime,
                     String cookingtime, String content, String pic,
                     String tag,
                     List<MaterialBean> materialBeen,
-                    List<ProcessBean> processBeen ) {
+                    List<ProcessBean> processBeen,String real_ip) {
         this.id_cook = id_cook;
         this.content = content;
         this.cookingtime = cookingtime;
@@ -48,22 +52,8 @@ public class CookBean implements Serializable{
         this.pic = pic;
         this.preparetime = preparetime;
         this.processBeen = processBeen;
-        this.tag = tag;
-    }
-
-    @Override
-    public String toString() {
-        return "CookBean{" +
-                "classid_cook='" + classid_cook + '\'' +
-                ", id_cook='" + id_cook + '\'' +
-                ", name_cook='" + name_cook + '\'' +
-                ", peoplenum='" + peoplenum + '\'' +
-                ", preparetime='" + preparetime + '\'' +
-                ", cookingtime='" + cookingtime + '\'' +
-                ", content='" + content + '\'' +
-                ", pic='" + pic + '\'' +
-                ", tag='" + tag + '\'' +
-                '}';
+        this.tag_cook = tag;
+        this.real_ip = real_ip;
     }
 
     public String getClassid_cook() {
@@ -146,11 +136,19 @@ public class CookBean implements Serializable{
         this.processBeen = processBeen;
     }
 
-    public String getTag() {
-        return tag;
+    public String getTag_cook() {
+        return tag_cook;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setTag_cook(String tag_cook) {
+        this.tag_cook = tag_cook;
+    }
+
+    public String getReal_ip() {
+        return real_ip;
+    }
+
+    public void setReal_ip(String real_ip) {
+        this.real_ip = real_ip;
     }
 }

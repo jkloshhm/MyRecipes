@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#ffffff</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimaryDark">#FFFFFF</color>
+    <color name="colorAccent">#FB6269</color>
 
     <color name="red_theme">#FB6269</color>
     <color name="red_edit_background">#f2c4c5</color>
     <color name="red_children_background">#bfbfbf</color>
-
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="gray_class_background">#F5F5F5</color>
@@ -17,13 +16,19 @@
     <color name="gray_me_line">#E5E5E5</color>
     <color name="item_color">#ffffff</color>
     <color name="item_click_color">#aae2e2e2</color>
+    <color name="gray">#999999</color>
+    <color name="gray_content_color">#333333</color>
+    <color name="gray_cccccc">#CCCCCC</color>
+
+
+
 
     <color name="colorPrimary1">#3F51B5</color>
     <color name="colorPrimaryDark1">#303F9F</color>
     <color name="colorAccent1">#FF4081</color>
     <color name="red">#fb6269</color>
     <color name="green1">#45C01A</color>
-    <color name="gray">#999999</color>
+    <color name="gray0">#999999</color>
     <color name="selected_parent_color">#ff4b35</color>
     <color name="gray1">#ece9e9</color>
     <color name="gray2">#f2f1f1</color>
