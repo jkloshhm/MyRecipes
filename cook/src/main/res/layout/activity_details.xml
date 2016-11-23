@@ -76,6 +76,7 @@
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/scrollView_details"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical">
@@ -130,6 +131,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:paddingTop="21.5dp"
+                            android:lineSpacingExtra="4dp"
                             android:text="@string/me"
                             android:textColor="@color/gray_content_color"
                             android:textSize="14sp" />
@@ -146,8 +148,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingBottom="15dp"
-                        android:paddingTop="15dp">
+                        android:paddingBottom="18dp"
+                        android:paddingTop="18dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -203,7 +205,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingTop="15dp">
+                        android:paddingTop="18dp">
 
                         <ImageView
                             android:layout_width="15dp"
@@ -223,7 +225,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="18dp"
                         android:background="@color/gray_me_line" />
 
                     <TextView
@@ -295,7 +297,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="20dp">
+                android:paddingTop="20dp"
+                android:paddingBottom="5dp">
                 <View
                     android:layout_width="100dp"
                     android:layout_height="0.5dp"
@@ -313,8 +316,6 @@
                     android:layout_height="0.5dp"
                     android:background="@color/gray_me_line"/>
             </LinearLayout>
-
-
         </LinearLayout>
     </ScrollView>
 

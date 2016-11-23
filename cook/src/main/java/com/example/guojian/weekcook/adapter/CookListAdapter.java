@@ -65,11 +65,12 @@ public class CookListAdapter extends BaseAdapter {
         StringBuilder material = new StringBuilder("");
         for (int i = materialBeanList.size() - 1; i >= 0; i--) {
             MaterialBean materialBean = materialBeanList.get(i);
-            material.append(materialBean.getMname() + ", ");
+            String materialString = materialBean.getMname() + ", ";
+            material.append(materialString);
         }
-
         holder.mCookMaterial.setText(material);
-        holder.mCookingTime.setText("烹饪时间: " + cookBean.getCookingtime());
+        String mCookingTimeString = "烹饪时间: " + cookBean.getCookingtime();
+        holder.mCookingTime.setText(mCookingTimeString);
         String image_url = cookBean.getPic();
 
         ImageLoaderUtil.setPicBitmap2(holder.imageView, image_url);

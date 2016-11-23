@@ -56,7 +56,8 @@ public class ProcessAdapter extends BaseAdapter {
         }
 
         ProcessBean processBean = processBeanList.get(position);
-        holder.pContent.setText((position+1)+". "+processBean.getProcess_pcontent());
+        String ProcessString = (position+1)+". "+processBean.getProcess_pcontent().replace("<br />","");
+        holder.pContent.setText(ProcessString);
         String img_url = processBean.getProcess_pic();
         ImageLoaderUtil.setPicBitmap2(holder.pImageView, img_url);
 

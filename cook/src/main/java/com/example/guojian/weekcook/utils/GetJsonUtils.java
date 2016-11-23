@@ -25,7 +25,7 @@ public class GetJsonUtils {
         apiRequest.setPath("/recipe/search");
         apiRequest.setMethod(HttpMethod.GET);
         apiRequest.addQuery("keyword", name);
-        apiRequest.addQuery("num", "50");
+        apiRequest.addQuery("num", "5");
         apiRequest.setTrustServerCertificate(true);
         apiRequest.setTimeout(10000);
         rpcService.call(apiRequest, new ApiResponseCallback() {
@@ -54,11 +54,11 @@ public class GetJsonUtils {
         });
     }
 
-    public static void GetDataBySearchNameId(final Handler handler, String nameId) {
+    public static void GetDataBySearchNameId(final Handler handler, String nameId, final String tag) {
         RpcService rpcService = ApiGatewayClient.getRpcService();
         final ApiRequest apiRequest = new ApiRequest();
         apiRequest.setAddress("http://jisusrecipe.market.alicloudapi.com");
-        apiRequest.setPath("recipe/detail");
+        apiRequest.setPath("/recipe/detail");
         apiRequest.setMethod(HttpMethod.GET);
         apiRequest.addQuery("id", nameId);
         //apiRequest.addQuery("num", "2");
@@ -74,6 +74,7 @@ public class GetJsonUtils {
                     bundle.putString("classType","GetDataBySearchNameId");
                     bundle.putString("errorMessage", errorMessage);
                     bundle.putString("stringBody", stringBody);
+                    bundle.putString("tag",tag);
                     Message msg = new Message();
                     msg.setData(bundle);
                     handler.sendMessage(msg);
@@ -87,6 +88,8 @@ public class GetJsonUtils {
             }
         });
     }
+
+
 
     public static void GetDataClass(final Handler handler) {
         RpcService rpcService = ApiGatewayClient.getRpcService();

@@ -1,8 +1,11 @@
 package com.example.guojian.weekcook.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,14 +27,16 @@ import com.example.guojian.weekcook.dao.DBServices;
 import com.example.guojian.weekcook.dao.MyDBServiceUtils;
 import com.example.guojian.weekcook.utils.ImageLoaderUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailsActivity extends Activity  {
+public class DetailsActivity extends Activity {
     private static DBServices db;
     private static ArrayList<CookBean> cookBeanlist;
     private static ArrayList<String> cookIdList = new ArrayList<>();
     private static ArrayList<String> cookTagArrayList = new ArrayList<>();
+    String picpath = getSDCardPath() + "/Cooking/ScreenShotImage";
     private String realIp;
     private CookBean cookBean;
     private ImageView mCollectImg, mDetailsImage;
@@ -41,10 +47,38 @@ public class DetailsActivity extends Activity  {
     private ListView mListViewMaterial, mListViewProcess;
     private MaterialAdapter mMaterialAdapter;
     private ProcessAdapter mProcessAdapter;
-    private LinearLayout mlinearLayout, mCollectLinearLayout, mButtonBack;
+    private LinearLayout mlinearLayout, mCollectLinearLayout, mButtonBack, mShareLinearLayout;
+    private ScrollView mScrollView;
     private boolean isRed;
     private TextView mName, mContent, mPeopleNum, mCookingTime, mTag;
     private String TAG = "jkloshhm-----------DetailsActivity------";
+
+    /*
+* 打开设置网络界面
+* */
+    public void setCancleColltion() {
+        //提示对话框
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("温馨提示")
+                .setIcon(R.mipmap.tishi)
+                .setMessage("是否取消收藏?")
+                .setPositiveButton("是", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mCollectImg.setImageDrawable(getResources().getDrawable(R.mipmap.collection_gray));
+                        isRed = false;
+                        Toast.makeText(DetailsActivity.this, "已取消收藏~", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("否", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +86,25 @@ public class DetailsActivity extends Activity  {
         Log.i(TAG, "DetailsActivity____________onCreate()");
         setContentView(R.layout.activity_details);
         initViews();
+        mShareLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*ScreenShot.savePic(ScreenShot.compressImage(ScreenShot
+                        .getBitmapByView(mScrollView)));
+                Toast.makeText(DetailsActivity.this, "open file", Toast.LENGTH_SHORT).show();
+                String fname = ScreenShot.savePic(ScreenShot.getBitmapByView(mScrollView));
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse("file://"+fname), "image*//*");
+                Toast.makeText(DetailsActivity.this, "open file", Toast.LENGTH_SHORT).show();*/
+                /*new Thread(new Runnable() {
+                    @Override
+                    public void run() {
 
+                    }
+                }).start();*/
+
+            }
+        });
     }
 
     @Override
@@ -81,16 +133,29 @@ public class DetailsActivity extends Activity  {
             @Override
             public void onClick(View v) {
                 if (isRed) {//删除
-                    mCollectImg.setImageDrawable(getResources().getDrawable(R.mipmap.collection_gray));
-                    isRed = false;
-                    Toast.makeText(getApplicationContext(), "已取消收藏~", Toast.LENGTH_SHORT).show();
+                    setCancleColltion();
+
                 } else {
                     mCollectImg.setImageDrawable(getResources().getDrawable(R.mipmap.collection_red));
                     isRed = true;
-                    Toast.makeText(getApplicationContext(), "收藏成功~", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailsActivity.this, "收藏成功~", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    /**
+     * 获取SDCard的目录路径功能
+     */
+    private String getSDCardPath() {
+        File sdcardDir = null;
+        // 判断SDCard是否存在
+        boolean sdcardExist = Environment.getExternalStorageState().equals(
+                android.os.Environment.MEDIA_MOUNTED);
+        if (sdcardExist) {
+            sdcardDir = Environment.getExternalStorageDirectory();
+        }
+        return sdcardDir.toString();
     }
 
     @Override
@@ -100,13 +165,13 @@ public class DetailsActivity extends Activity  {
         if (realIp.equals("mary")) {
             if (isRed) {//保存
                 MyDBServiceUtils.saveData(cookBean, db);
-                Toast.makeText(getApplicationContext(), "收藏成功 realIp.equals(\"mary\") =true ~~~~~~onPause", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailsActivity.this, "收藏成功 realIp.equals(\"mary\") =true ~~~~~~onPause", Toast.LENGTH_SHORT).show();
             }
         } else {
             if (!isRed) {//删除
                 MyDBServiceUtils.delectData(cookBean, db);
                 cookBean.setReal_ip("mary");
-                Toast.makeText(getApplicationContext(), "已取消收藏~~~realIp.equals(\"mary\") =false~~~~onPause", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailsActivity.this, "已取消收藏~~~realIp.equals(\"mary\") =false~~~~onPause", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -124,10 +189,14 @@ public class DetailsActivity extends Activity  {
         mName.setText(cookBean.getName_cook());
         String img_url = cookBean.getPic();
         ImageLoaderUtil.setPicBitmap2(mDetailsImage, img_url);
-        mContent.setText(cookBean.getContent());
-        mPeopleNum.setText("用餐人数: " + cookBean.getPeoplenum());
-        mCookingTime.setText("烹饪时间: " + cookBean.getCookingtime());
-        mTag.setText("标签: " + cookBean.getTag_cook());
+        String mContentString = cookBean.getContent().replace("<br />", "");
+        mContent.setText(mContentString);
+        String mPeopleNumString = "用餐人数: " + cookBean.getPeoplenum();
+        mPeopleNum.setText(mPeopleNumString);
+        String mCookingTimeString = "烹饪时间: " + cookBean.getCookingtime();
+        mCookingTime.setText(mCookingTimeString);
+        String mTagString = "标签: " + cookBean.getTag_cook();
+        mTag.setText(mTagString);
         materialBeanlist = cookBean.getMaterialBeen();
         mMaterialAdapter = new MaterialAdapter(this, materialBeanlist);
         mListViewMaterial.setAdapter(mMaterialAdapter);
@@ -140,6 +209,8 @@ public class DetailsActivity extends Activity  {
     }
 
     private void initViews() {
+        mScrollView = (ScrollView) findViewById(R.id.scrollView_details);
+        mShareLinearLayout = (LinearLayout) findViewById(R.id.ll_share_the_cook_data);
         mButtonBack = (LinearLayout) findViewById(R.id.ll_details_back_to_list);
         mCollectLinearLayout = (LinearLayout) findViewById(R.id.ll_collect_the_cook_data);
         mCollectImg = (ImageView) findViewById(R.id.iv_collection_img);

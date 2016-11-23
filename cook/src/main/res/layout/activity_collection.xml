@@ -5,8 +5,59 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.guojian.weekcook.activity.CollectionActivity">
-
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/red_theme"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_back_to_my_home"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <ImageView
+                android:layout_width="9dp"
+                android:layout_height="16.5dp"
+                android:background="@mipmap/back_black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_collection"
+                android:textSize="18sp"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <ImageView
+                android:layout_width="9dp"
+                android:layout_height="16.5dp"
+                android:background="@mipmap/back_black"
+                android:visibility="invisible"/>
+        </LinearLayout>
+    </LinearLayout>
+    <!--<LinearLayout
         android:id="@+id/ll_webView_title"
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -60,7 +111,7 @@
                 android:background="@mipmap/back3"
                 android:visibility="invisible" />
         </LinearLayout>
-    </LinearLayout>
+    </LinearLayout>-->
 
     <ListView
         android:id="@+id/lv_my_collection_list"
