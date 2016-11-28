@@ -18,7 +18,13 @@
     <color name="item_click_color">#aae2e2e2</color>
     <color name="gray">#999999</color>
     <color name="gray_content_color">#333333</color>
+    <color name="gray_fff7f7">#fff7f7</color>
+    <color name="gray_content_color_333333">#333333</color>
+    <color name="red_fb6269">#fb6269</color>
     <color name="gray_cccccc">#CCCCCC</color>
+    <color name="red_f0f0f3">#CCCCCC</color>
+    <color name="gray_cccccc3">#CCCCCC</color>
+    <color name="gray_cccccc4">#CCCCCC</color>
 
 
 

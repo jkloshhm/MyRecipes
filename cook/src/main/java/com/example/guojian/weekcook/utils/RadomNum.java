@@ -1,7 +1,5 @@
 package com.example.guojian.weekcook.utils;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Random;
 
 /**
@@ -12,14 +10,14 @@ public class RadomNum {
     public static int[] makeCount() {
         int numList [] = new int[3];
         Random random = new Random();
-        int i = random.nextInt(1000);
-        int j = random.nextInt(1000);
-        int k = random.nextInt(1000);
+        int i = random.nextInt(3000);
+        int j = random.nextInt(3000);
+        int k = random.nextInt(3000);
         while (i == j) {
-            j = random.nextInt(1000);
+            j = random.nextInt(3000);
         }
         while (k == j || k == i) {
-            k = random.nextInt(1000);
+            k = random.nextInt(3000);
         }
         numList[0] = i+1;
         numList[1] = j+1;

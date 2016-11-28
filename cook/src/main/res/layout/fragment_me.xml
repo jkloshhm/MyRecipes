@@ -1,11 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_fragment_me"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:background="@color/white"
     tools:context="com.example.guojian.weekcook.activity.MainActivity">
 
     <com.example.guojian.weekcook.utils.CircleImageView
@@ -33,11 +34,11 @@
         android:background="@color/gray_me_line" />
 
     <LinearLayout
-        android:background="@drawable/me_item_selector_color"
-        android:clickable="true"
-        android:id="@+id/ll_my_collection"
+        android:id="@+id/ll_my_collection_me"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:background="@drawable/me_item_selector_color"
+        android:clickable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -73,6 +74,7 @@
         android:background="@color/gray_me_line" />
 
     <LinearLayout
+        android:id="@+id/ll_my_information_me"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="@drawable/me_item_selector_color"
@@ -81,7 +83,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_my_information"
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -111,6 +113,7 @@
         android:background="@color/gray_me_line" />
 
     <LinearLayout
+        android:id="@+id/ll_my_settings_me"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="@drawable/me_item_selector_color"
@@ -119,7 +122,6 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_settings"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -150,6 +152,7 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_share_app"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="@drawable/me_item_selector_color"
@@ -158,7 +161,6 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_share_app"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

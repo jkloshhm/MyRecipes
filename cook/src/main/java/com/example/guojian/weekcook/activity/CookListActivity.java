@@ -50,7 +50,7 @@ public class CookListActivity extends Activity {
             String jsonData = jsonBundle.getString("stringBody");
             //Log.i(TAG, "--------->>jsonData====" + jsonData);
             Log.i(TAG, "--------->>jsonErrorMessage====" + jsonErrorMessage);
-            if (jsonData != null && jsonErrorMessage == null) {
+            if (jsonData != null) {
                 if (classType != null && classType.equals("GetDataBySearchName")) {//按名称搜索菜谱
                     getDataAndUpdateUI(jsonData);
                 } else if (classType != null && classType.equals("GetDataClass")) {//分类名称

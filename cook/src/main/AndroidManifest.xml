@@ -34,11 +34,19 @@
         <activity
             android:name=".activity.CookListActivity"
             android:theme="@style/AppTheme_red" />
-        <activity android:name=".activity.DetailsActivity"
-            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".activity.DetailsActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.CollectionActivity"
             android:theme="@style/AppTheme_red" />
+        <activity
+            android:name=".activity.MyInformationActivity"
+            android:theme="@style/AppTheme_red" />
+        <activity
+            android:name=".activity.MySettingsActivity"
+            android:theme="@style/AppTheme_red" />
+
     </application>
 
 </manifest>

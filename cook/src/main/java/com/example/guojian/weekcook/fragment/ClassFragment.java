@@ -53,15 +53,10 @@ public class ClassFragment extends Fragment {
             String jsonData = jsonBundle.getString("stringBody");
             //Log.i(TAG, "--------->>jsonData====" + jsonData);
             //Log.i(TAG, "--------->>jsonErrorMessage====" + jsonErrorMessage);
-            if (jsonData != null && jsonErrorMessage == null) {
+            if (jsonData != null) {
                 if (classType != null && classType.equals("GetDataClass")) {//分类名称
                     getDataAndUpdateUI(jsonData);
                 }
-                /*if (classType != null && classType.equals("GetDataBySearchName")) {//按名称搜索菜谱
-                } else if (classType != null && classType.equals("GetDataClass")) {//分类名称
-                   getDataAndUpdateUI(jsonData);
-                } else if (classType != null && classType.equals("GetDataByClassId")) {//分类名称ID
-                }*/
             }
             mListViewParent.setAdapter(parentClassAdapter);
             initChildrenView(0);

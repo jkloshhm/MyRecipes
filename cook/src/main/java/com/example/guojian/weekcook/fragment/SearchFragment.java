@@ -33,22 +33,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class SearchFragment extends Fragment {
-    /**
-     * 禁止EditText输入特殊字符
-     */
-/*    public static void setEditTextInhibitInputSpeChat(EditText editText) {
-        InputFilter filter = new InputFilter() {
-            @Override
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                String speChat = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
-                Pattern pattern = Pattern.compile(speChat);
-                Matcher matcher = pattern.matcher(source.toString());
-                if (matcher.find()) return "";
-                else return null;
-            }
-        };
-        editText.setFilters(new InputFilter[]{filter});
-    }*/
+    private static String TAG = "jkloshhm___SearchFragment";
     private static TextView textView001, textView002, textView003;
     final static Handler handlerSearch = new Handler() {
         @Override
@@ -58,16 +43,9 @@ public class SearchFragment extends Fragment {
             String jsonErrorMessage = jsonBundle.getString("errorMessage");
             String jsonData = jsonBundle.getString("stringBody");
             String tag = jsonBundle.getString("tag");
-            //Log.i(TAG, "--------->>jsonData====" + jsonData);
-            //Log.i(TAG, "--------->>jsonErrorMessage====" + jsonErrorMessage);
-            if (jsonData != null && jsonErrorMessage == null) {
-                /*if (classType != null && classType.equals("GetDataClass")) {//分类名称
-                    getDataAndUpdateUI(jsonData);//GetDataBySearchNameId
-                }else if (classType != null && classType.equals("GetDataBySearchName")) {//按名称搜索菜谱
-                } else if (classType != null && classType.equals("GetDataClass")) {//分类名称
-                   getDataAndUpdateUI(jsonData);
-                } else if (classType != null && classType.equals("GetDataByClassId")) {//分类名称ID
-                }*/
+            Log.i(TAG, "--------->>jsonData====" + jsonData);
+            Log.i(TAG, "--------->>jsonErrorMessage====" + jsonErrorMessage);
+            if (jsonData != null) {
                 if (classType != null && classType.equals("GetDataBySearchNameId")) {//搜索名称ID
                     StringBuilder s = new StringBuilder("");
                     if (tag != null) {
@@ -150,7 +128,8 @@ public class SearchFragment extends Fragment {
 
         preferences = mContext.getSharedPreferences("cooking", Context.MODE_PRIVATE);
         editor = preferences.edit();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        String dateFormat = "yyyyMMdd";
+        SimpleDateFormat df = new SimpleDateFormat(dateFormat);//设置日期格式
         String date = df.format(new Date());
         Log.i("jkloshhm", date);
         if (preferences.getString("date", null) == null) {
