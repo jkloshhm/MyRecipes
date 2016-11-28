@@ -53,15 +53,11 @@ public class DetailsActivity extends Activity {
     private TextView mName, mContent, mPeopleNum, mCookingTime, mTag;
     private String TAG = "jkloshhm-----------DetailsActivity------";
 
-    /*
-* 打开设置网络界面
-* */
+   //是否取消收藏
     public void setCancleColltion() {
         //提示对话框
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("温馨提示")
-                .setIcon(R.mipmap.tishi)
-                .setMessage("是否取消收藏?")
+        builder.setView(getLayoutInflater().inflate(R.layout.alert_dialog_view,null))
                 .setPositiveButton("是", new DialogInterface.OnClickListener() {
 
                     @Override
@@ -181,7 +177,7 @@ public class DetailsActivity extends Activity {
         cookBeanlist = MyDBServiceUtils.getAllObject(db);
         for (int i = 0; i < cookBeanlist.size(); i++) {
             String real_ip = cookBeanlist.get(i).getReal_ip();
-            this.cookIdList.add(real_ip);
+            cookIdList.add(real_ip);
         }
     }
 

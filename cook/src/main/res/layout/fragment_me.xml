@@ -10,7 +10,7 @@
     tools:context="com.example.guojian.weekcook.activity.MainActivity">
 
     <com.example.guojian.weekcook.utils.CircleImageView
-        android:id="@+id/iv_item_cook"
+        android:id="@+id/iv_my_title_img"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:paddingTop="20dp"

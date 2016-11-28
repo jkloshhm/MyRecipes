@@ -1,6 +1,5 @@
 package com.example.guojian.weekcook.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,25 +20,18 @@ import java.util.ArrayList;
 
 public class CollectionActivity extends AppCompatActivity {
 
-    private static Context context;
     private static DBServices db;
     private static ArrayList<CookBean> cookBeanlist;
     private static CookBean cookBean;
-    private ArrayList<String> array = new ArrayList<String>();
+    //private ArrayList<String> array = new ArrayList<String>();
     private CookListAdapter adapter;
     private ListView lv;
-
-    /*private static void delectData(int position) {
-        String cursor_id = cookBeanlist.get(position).getClassid_cook();
-        db.delete("Test", "_id like ?", new String[]{cursor_id});
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i("jkloshhm", "CollectionActivity____________onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
-        context = this.getApplicationContext();
         lv = (ListView) findViewById(R.id.lv_my_collection_list);
         final LinearLayout mBackLinearLayout = (LinearLayout) findViewById(R.id.ll_back_to_my_home);
         if (mBackLinearLayout != null) {
@@ -74,8 +66,6 @@ public class CollectionActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 cookBean = cookBeanlist.get(position);
                 MyDBServiceUtils.delectData(cookBean, db);
-                /*adapter.notifyDataSetChanged();
-                adapter.notifyDataSetInvalidated();*/
                 Toast.makeText(CollectionActivity.this, "取消收藏", Toast.LENGTH_SHORT).show();
                 return true;
             }
@@ -86,14 +76,18 @@ public class CollectionActivity extends AppCompatActivity {
         db = MyDBServiceUtils.getInstance(this);
         cookBeanlist = MyDBServiceUtils.getAllObject(db);
         Log.i("jkloshhm", "CollectionActivity____________cookBeanlist.size()"+cookBeanlist.size());
-        for (int i = 0; i < cookBeanlist.size(); i++) {
+        /*for (int i = 0; i < cookBeanlist.size(); i++) {
             String object = cookBeanlist.get(i).getName_cook();
             this.array.add(object);
-        }
-        /*adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_expandable_list_item_1, array);*/
+        }*/
         adapter = new CookListAdapter(this,cookBeanlist);
         lv.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
     }
 
     @Override
