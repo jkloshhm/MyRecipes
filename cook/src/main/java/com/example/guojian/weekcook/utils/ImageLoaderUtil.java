@@ -45,13 +45,13 @@ public class ImageLoaderUtil {
 
         final ImageView mImageView = ivPic;
         String imageUrl = pic_url;//"https://lh6.googleusercontent.com/-55osAWw3x0Q/URquUtcFr5I/AAAAAAAAAbs/rWlj1RUKrYI/s1024/A%252520Photographer.jpg";
-        ImageSize mImageSize = new ImageSize(100, 100);
+        ImageSize mImageSize = new ImageSize(230, 230);
 
         //显示图片的配置
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
+                .bitmapConfig(Bitmap.Config.ARGB_8888)
                 .build();
 
         ImageLoader.getInstance().loadImage(imageUrl, mImageSize, options, new SimpleImageLoadingListener() {

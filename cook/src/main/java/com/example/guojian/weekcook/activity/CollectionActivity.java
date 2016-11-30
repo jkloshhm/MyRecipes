@@ -42,7 +42,6 @@ public class CollectionActivity extends AppCompatActivity {
                 }
             });
         }
-
         initDB();
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

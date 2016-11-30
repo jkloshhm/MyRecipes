@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.example.guojian.weekcook.utils.GridViewWithHeaderAndFooter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,11 +42,14 @@ public class ClassFragment extends Fragment {
     private static List<ChildrenClassBean> childrenClassBeenList;
     private static Context mContext;
     private static LinearLayout mLoadingLinearLayout, mParentLinearLayout, mChildrenLinearLayout;
-    private static String TAG = "guojian_CookDemo";
+    private static String TAG = "guojian_CookDemo_ClassFragment";
     private static ListView mListViewParent;
     private static GridViewWithHeaderAndFooter mGridViewChildren;
     private static ParentClassAdapter parentClassAdapter;
-    final static Handler handler = new Handler() {
+    private static ChildrenClassAdapter childrenClassAdapter;
+    private MyHandler myHandler = new MyHandler(this);
+    private View headerView, footerView;
+/*    private final static Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             Bundle jsonBundle = msg.getData();
@@ -61,7 +66,7 @@ public class ClassFragment extends Fragment {
             mListViewParent.setAdapter(parentClassAdapter);
             initChildrenView(0);
         }
-    };
+    };*/
 
     public ClassFragment() {
         // Required empty public constructor
@@ -70,7 +75,7 @@ public class ClassFragment extends Fragment {
     private static void initChildrenView(int position) {
         ParentClassBean parentClassBean1 = parentClassBeenList.get(position);
         childrenClassBeenList = parentClassBean1.getChildrenClassBeen();
-        ChildrenClassAdapter childrenClassAdapter = new ChildrenClassAdapter(childrenClassBeenList, mContext);
+        childrenClassAdapter = new ChildrenClassAdapter(childrenClassBeenList, mContext);
         mGridViewChildren.setAdapter(childrenClassAdapter);
         parentClassAdapter.setSelectItem(position);
         parentClassAdapter.notifyDataSetInvalidated();
@@ -122,20 +127,18 @@ public class ClassFragment extends Fragment {
         mContext = getActivity();
         // Inflate the layout for this fragment
         View mClassView = inflater.inflate(R.layout.fragment_class, container, false);
-        View headerView = inflater.inflate(R.layout.layout_class_children_header, container, false);
-        View footerView = inflater.inflate(R.layout.layout_class_children_footer, container, false);
-
+        headerView = inflater.inflate(R.layout.layout_class_children_header, container, false);
+        footerView = inflater.inflate(R.layout.layout_class_children_footer, container, false);
         mLoadingLinearLayout = (LinearLayout) mClassView.findViewById(R.id.ll_loading);
         mParentLinearLayout = (LinearLayout) mClassView.findViewById(R.id.ll_parent_class);
         mChildrenLinearLayout = (LinearLayout) mClassView.findViewById(R.id.ll_children_class);
-
         mListViewParent = (ListView) mClassView.findViewById(R.id.lv_parent_class);
         mGridViewChildren = (GridViewWithHeaderAndFooter) mClassView.findViewById(R.id.lv_children_class);
         parentClassBeenList = new ArrayList<>();
         new Thread(new Runnable() {
             @Override
             public void run() {
-                GetJsonUtils.GetDataClass(handler);
+                GetJsonUtils.GetDataClass(myHandler);
             }
         }).start();
         parentClassAdapter = new ParentClassAdapter(mContext, parentClassBeenList);
@@ -166,4 +169,48 @@ public class ClassFragment extends Fragment {
         return mClassView;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (childrenClassAdapter != null) childrenClassAdapter = null;
+        if (parentClassAdapter != null) parentClassAdapter = null;
+        if (mGridViewChildren != null) {
+            try {
+                Log.i(TAG, "mGridViewChildren 1111===" + (mGridViewChildren == null));
+                mGridViewChildren = null;
+                headerView = null;
+                footerView = null;
+                Log.i(TAG, "mGridViewChildren 2222===" + (mGridViewChildren == null));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Log.i(TAG, "mGridViewChildren 3333===" + (mGridViewChildren == null));
+        }
+    }
+
+    private class MyHandler extends Handler {
+        WeakReference<ClassFragment> classFragmentWeakReference;
+
+        MyHandler(ClassFragment classFragment) {
+            classFragmentWeakReference = new WeakReference<ClassFragment>(classFragment);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bundle jsonBundle = msg.getData();
+            String classType = jsonBundle.getString("classType");
+            String jsonErrorMessage = jsonBundle.getString("errorMessage");
+            String jsonData = jsonBundle.getString("stringBody");
+            //Log.i(TAG, "--------->>jsonData====" + jsonData);
+            //Log.i(TAG, "--------->>jsonErrorMessage====" + jsonErrorMessage);
+            if (jsonData != null) {
+                if (classType != null && classType.equals("GetDataClass")) {//分类名称
+                    getDataAndUpdateUI(jsonData);
+                }
+            }
+            mListViewParent.setAdapter(parentClassAdapter);
+            initChildrenView(0);
+        }
+    }
 }

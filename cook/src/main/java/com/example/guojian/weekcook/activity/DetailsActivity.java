@@ -35,8 +35,6 @@ public class DetailsActivity extends Activity {
     private static DBServices db;
     private static ArrayList<CookBean> cookBeanlist;
     private static ArrayList<String> cookIdList = new ArrayList<>();
-    private static ArrayList<String> cookTagArrayList = new ArrayList<>();
-    String picpath = getSDCardPath() + "/Cooking/ScreenShotImage";
     private String realIp;
     private CookBean cookBean;
     private ImageView mCollectImg, mDetailsImage;
@@ -53,11 +51,11 @@ public class DetailsActivity extends Activity {
     private TextView mName, mContent, mPeopleNum, mCookingTime, mTag;
     private String TAG = "jkloshhm-----------DetailsActivity------";
 
-   //是否取消收藏
+    //是否取消收藏
     public void setCancleColltion() {
         //提示对话框
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(getLayoutInflater().inflate(R.layout.alert_dialog_view,null))
+        builder.setView(getLayoutInflater().inflate(R.layout.alert_dialog_view, null))
                 .setPositiveButton("是", new DialogInterface.OnClickListener() {
 
                     @Override
@@ -130,7 +128,6 @@ public class DetailsActivity extends Activity {
             public void onClick(View v) {
                 if (isRed) {//删除
                     setCancleColltion();
-
                 } else {
                     mCollectImg.setImageDrawable(getResources().getDrawable(R.mipmap.collection_red));
                     isRed = true;
@@ -155,19 +152,22 @@ public class DetailsActivity extends Activity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     protected void onPause() {
         Log.i(TAG, "DetailsActivity ____________onPause()");
         super.onPause();
         if (realIp.equals("mary")) {
             if (isRed) {//保存
                 MyDBServiceUtils.saveData(cookBean, db);
-                Toast.makeText(DetailsActivity.this, "收藏成功 realIp.equals(\"mary\") =true ~~~~~~onPause", Toast.LENGTH_SHORT).show();
             }
         } else {
             if (!isRed) {//删除
                 MyDBServiceUtils.delectData(cookBean, db);
                 cookBean.setReal_ip("mary");
-                Toast.makeText(DetailsActivity.this, "已取消收藏~~~realIp.equals(\"mary\") =false~~~~onPause", Toast.LENGTH_SHORT).show();
             }
         }
     }

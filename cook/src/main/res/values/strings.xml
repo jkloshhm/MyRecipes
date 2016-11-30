@@ -26,6 +26,8 @@
     <string name="my_settings_help_center">帮助中心</string>
     <string name="my_settings_give_app_score">给app评分</string>
     <string name="my_settings_clean_cache">清除缓存</string>
+    <string name="my_settings_my_cache_size">0.00kb</string>
+
 
     <!--  Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

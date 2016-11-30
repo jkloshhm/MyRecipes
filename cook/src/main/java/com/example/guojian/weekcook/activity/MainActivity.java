@@ -55,16 +55,16 @@ public class MainActivity extends FragmentActivity {
                          * setCurrentItem第二个参数控制页面切换动画
                          * true:打开/false:关闭
                          */
-                        viewPager.setCurrentItem(0, true);
+                        viewPager.setCurrentItem(0, false);
                         break;
                     case R.id.rb_class:
-                        viewPager.setCurrentItem(1, true);
+                        viewPager.setCurrentItem(1, false);
                         break;
                     /*case R.id.rb_discovery:
                         viewPager.setCurrentItem(2, true);
                         break;*/
                     case R.id.rb_me:
-                        viewPager.setCurrentItem(2, true);
+                        viewPager.setCurrentItem(2, false);
                         break;
                 }
             }

@@ -46,7 +46,9 @@
         <activity
             android:name=".activity.MySettingsActivity"
             android:theme="@style/AppTheme_red" />
-
+        <activity
+            android:name=".activity.MyHeadImageShowerActivity"
+            android:theme="@style/AppTheme_black"/>
     </application>
 
 </manifest>

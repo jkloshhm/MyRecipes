@@ -24,6 +24,7 @@ import com.example.guojian.weekcook.utils.GetJsonUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,26 @@ public class CookListActivity extends Activity {
     private LinearLayout mLoadingLinearLayout, mNoMassageLinearLayout, mBackLinearLayout;
     private ArrayList<CookBean> cookBeenArrayList;
     private ArrayList<String> cookIdList = new ArrayList<>();
-    final Handler handlerClass = new Handler() {
+    private MyHandler mMyHandler = new MyHandler(this);
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i(TAG, "CookListActivity ____________onCreate()");
+        setContentView(R.layout.activity_cook_list);
+        mNameTextView = (TextView) findViewById(R.id.tv_cook_name);
+        mLisview = (ListView) findViewById(R.id.lv_cook_list);
+        mLoadingLinearLayout = (LinearLayout) findViewById(R.id.ll_loading_list);
+        mNoMassageLinearLayout = (LinearLayout) findViewById(R.id.ll_no_data_massage);
+        mBackLinearLayout = (LinearLayout) findViewById(R.id.ll_back_class_home);
+        mBackLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+/*    final Handler handlerClass = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             Bundle jsonBundle = msg.getData();
@@ -60,34 +80,30 @@ public class CookListActivity extends Activity {
                 }
             }
         }
-    };
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.i(TAG, "CookListActivity ____________onCreate()");
-
-        setContentView(R.layout.activity_cook_list);
-        mNameTextView = (TextView) findViewById(R.id.tv_cook_name);
-        mLisview = (ListView) findViewById(R.id.lv_cook_list);
-        mLoadingLinearLayout = (LinearLayout) findViewById(R.id.ll_loading_list);
-        mNoMassageLinearLayout = (LinearLayout) findViewById(R.id.ll_no_data_massage);
-        mBackLinearLayout = (LinearLayout) findViewById(R.id.ll_back_class_home);
-        mBackLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
+    };*/
 
     @Override
     protected void onResume() {
         Log.i(TAG, "CookListActivity ____________onResume()");
         super.onResume();
-
-
-
+        initJsonData();
+        initDB();
+        mCookListAdapter = new CookListAdapter(this, cookBeanList);
+        mLisview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                cookBean01 = cookBeanList.get(position);
+                try {
+                    Intent intent = new Intent(CookListActivity.this, DetailsActivity.class);
+                    Bundle b = new Bundle();
+                    b.putSerializable("cookBean01", cookBean01);
+                    intent.putExtras(b);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void initJsonData() {
@@ -100,15 +116,13 @@ public class CookListActivity extends Activity {
             @Override
             public void run() {
                 if (CookType.equals("GetDataByClassId")) {
-                    GetJsonUtils.GetDataByClassId(handlerClass, classId);
+                    GetJsonUtils.GetDataByClassId(mMyHandler, classId);
                 } else if (CookType.equals("GetDataBySearchName")) {
-                    GetJsonUtils.GetDataBySearchName(handlerClass, name);
+                    GetJsonUtils.GetDataBySearchName(mMyHandler, name);
                 }
-
             }
         }).start();
     }
-
 
     private void initDB() {
         try {
@@ -122,7 +136,6 @@ public class CookListActivity extends Activity {
             e.printStackTrace();
         }
     }
-
 
     private void getDataAndUpdateUI(String data) {
         try {
@@ -195,7 +208,6 @@ public class CookListActivity extends Activity {
         }
     }
 
-
     @Override
     protected void onRestart() {
         Log.i(TAG, "CookListActivity ____________onRestart()");
@@ -206,29 +218,38 @@ public class CookListActivity extends Activity {
     protected void onStart() {
         Log.i(TAG, "CookListActivity ____________onStart()");
         super.onStart();
-        initJsonData();
-        initDB();
-        mCookListAdapter = new CookListAdapter(this, cookBeanList);
-        mLisview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                cookBean01 = cookBeanList.get(position);
-                try {
-                    Intent intent = new Intent(CookListActivity.this, DetailsActivity.class);
-                    Bundle b = new Bundle();
-                    b.putSerializable("cookBean01", cookBean01);
-                    intent.putExtras(b);
-                    startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     @Override
     protected void onStop() {
         Log.i(TAG, "CookListActivity ____________onStop()");
         super.onStop();
+    }
+
+    private class MyHandler extends Handler {
+        WeakReference<CookListActivity> cookListActivityWeakReference;
+
+        MyHandler(CookListActivity cookListActivity) {
+            cookListActivityWeakReference = new WeakReference<CookListActivity>(cookListActivity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            Bundle jsonBundle = msg.getData();
+            String classType = jsonBundle.getString("classType");
+            String jsonErrorMessage = jsonBundle.getString("errorMessage");
+            String jsonData = jsonBundle.getString("stringBody");
+            //Log.i(TAG, "--------->>jsonData====" + jsonData);
+            Log.i(TAG, "--------->>jsonErrorMessage====" + jsonErrorMessage);
+            if (jsonData != null) {
+                if (classType != null && classType.equals("GetDataBySearchName")) {//按名称搜索菜谱
+                    getDataAndUpdateUI(jsonData);
+                } else if (classType != null && classType.equals("GetDataClass")) {//分类名称
+
+                } else if (classType != null && classType.equals("GetDataByClassId")) {//分类名称ID
+                    getDataAndUpdateUI(jsonData);
+                }
+            }
+        }
     }
 }

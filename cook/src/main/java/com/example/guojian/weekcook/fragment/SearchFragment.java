@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.example.guojian.weekcook.R;
 import com.example.guojian.weekcook.activity.CookListActivity;
 import com.example.guojian.weekcook.utils.GetJsonUtils;
+import com.example.guojian.weekcook.utils.ImageLoaderUtil;
 import com.example.guojian.weekcook.utils.RadomNum;
 
 import org.json.JSONObject;
@@ -35,6 +37,7 @@ import java.util.List;
 public class SearchFragment extends Fragment {
     private static String TAG = "jkloshhm___SearchFragment";
     private static TextView textView001, textView002, textView003;
+    private static ImageView img001, img002, img003;
     final static Handler handlerSearch = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -44,37 +47,15 @@ public class SearchFragment extends Fragment {
             String jsonData = jsonBundle.getString("stringBody");
             String tag = jsonBundle.getString("tag");
             Log.i(TAG, "--------->>jsonData====" + jsonData);
-            Log.i(TAG, "--------->>jsonErrorMessage====" + jsonErrorMessage);
+            //Log.i(TAG, "--------->>jsonErrorMessage====" + jsonErrorMessage);
             if (jsonData != null) {
                 if (classType != null && classType.equals("GetDataBySearchNameId")) {//搜索名称ID
-                    StringBuilder s = new StringBuilder("");
-                    if (tag != null) {
-                        try {
-                            JSONObject dataJsonObject = new JSONObject(jsonData);
-                            String result = dataJsonObject.getString("result");
-                            JSONObject resultJsonObject = new JSONObject(result);
-                            String id = resultJsonObject.getString("id");
-                            String classId = resultJsonObject.getString("classid");
-                            String name = resultJsonObject.getString("name");
-                            //JSONArray list_parent = resultJsonObject.getJSONArray("list");
-                            s.append(id + "---" + name);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        if (tag.equals("1")) {
-                            textView001.setText(s);
-                        } else if (tag.equals("2")) {
-                            textView002.setText(s);
-                        } else if (tag.equals("3")) {
-                            textView003.setText(s);
-                        }
-                    }
+                    getDataAndUpdateUI(jsonData,tag);
                 }
             }
         }
     };
-    int num[] = RadomNum.makeCount();
+    final int num[] = RadomNum.makeCount();
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private Context mContext;
@@ -83,20 +64,35 @@ public class SearchFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private static void getDataAndUpdateUI(String data) {
-        try {
-            JSONObject dataJsonObject = new JSONObject(data);
-            String result = dataJsonObject.getString("result");
-            JSONObject resultJsonObject = new JSONObject(result);
-            String id = resultJsonObject.getString("id");
-            String classId = resultJsonObject.getString("classid");
-            String name = resultJsonObject.getString("name");
-            //JSONArray list_parent = resultJsonObject.getJSONArray("list");
-            StringBuilder s = new StringBuilder("");
-            s.append(id + "---" + name);
-            textView001.setText(s);
-        } catch (Exception e) {
-            e.printStackTrace();
+    private static void getDataAndUpdateUI(String data, String tag) {
+        StringBuilder s = new StringBuilder("");
+        if (tag != null) {
+            String name = null;
+            String pic = null;
+            try {
+                JSONObject dataJsonObject = new JSONObject(data);
+                String result = dataJsonObject.getString("result");
+                JSONObject resultJsonObject = new JSONObject(result);
+                String id = resultJsonObject.getString("id");
+                String classId = resultJsonObject.getString("classid");
+                name = resultJsonObject.getString("name");
+                pic = resultJsonObject.getString("pic");
+                //JSONArray list_parent = resultJsonObject.getJSONArray("list");
+                //s.append(name);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (tag.equals("1")) {
+                textView001.setText(name);
+                ImageLoaderUtil.setPicBitmap1(img001,pic);
+            } else if (tag.equals("2")) {
+                textView002.setText(name);
+                ImageLoaderUtil.setPicBitmap1(img002,pic);
+            } else if (tag.equals("3")) {
+                textView003.setText(name);
+                ImageLoaderUtil.setPicBitmap1(img003,pic);
+            }
         }
     }
 
@@ -109,6 +105,10 @@ public class SearchFragment extends Fragment {
         textView001 = (TextView) view.findViewById(R.id.text001);
         textView002 = (TextView) view.findViewById(R.id.text002);
         textView003 = (TextView) view.findViewById(R.id.text003);
+        img001 = (ImageView) view.findViewById(R.id.img001);
+        img002 = (ImageView) view.findViewById(R.id.img002);
+        img003 = (ImageView) view.findViewById(R.id.img003);
+
         final EditText mSearchName = (EditText) view.findViewById(R.id.et_search_name);
         LinearLayout mSearchLinearLayout = (LinearLayout) view.findViewById(R.id.ll_search);
         mSearchLinearLayout.setOnClickListener(new View.OnClickListener() {
@@ -128,8 +128,8 @@ public class SearchFragment extends Fragment {
 
         preferences = mContext.getSharedPreferences("cooking", Context.MODE_PRIVATE);
         editor = preferences.edit();
-        String dateFormat = "yyyyMMdd";
-        SimpleDateFormat df = new SimpleDateFormat(dateFormat);//设置日期格式
+        //String dateFormat = "yyyyMMdd";
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHH");//设置日期格式
         String date = df.format(new Date());
         Log.i("jkloshhm", date);
         if (preferences.getString("date", null) == null) {
@@ -138,12 +138,16 @@ public class SearchFragment extends Fragment {
         editor.putString("num01", String.valueOf(num[0]));
         editor.putString("num02", String.valueOf(num[1]));
         editor.putString("num03", String.valueOf(num[2]));
+        //Log.i("jkloshhm_String(date)", preferences.getString("date", null));
         if (date.equals(preferences.getString("date", null))) {
+            Log.i("jkloshhm______if", date);
             editor.putString("num01", preferences.getString("num01", null));
             editor.putString("num02", preferences.getString("num02", null));
             editor.putString("num03", preferences.getString("num03", null));
         } else {
+            Log.i("jkloshhm______else", date);
             int num[] = RadomNum.makeCount();
+            editor.putString("date", date);
             editor.putString("num01", String.valueOf(num[0]));
             editor.putString("num02", String.valueOf(num[1]));
             editor.putString("num03", String.valueOf(num[2]));

@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context="com.example.guojian.weekcook.activity.DetailsActivity">
 
     <LinearLayout
@@ -130,8 +133,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:paddingTop="21.5dp"
                             android:lineSpacingExtra="4dp"
+                            android:paddingTop="21.5dp"
                             android:text="@string/me"
                             android:textColor="@color/gray_content_color"
                             android:textSize="14sp" />
@@ -284,37 +287,40 @@
                     android:textSize="14sp" />
 
                 <com.example.guojian.weekcook.MyListView
-                    android:paddingTop="10dp"
-                    android:divider="@null"
                     android:id="@+id/lv_listview_process"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:paddingTop="10dp" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="20dp"
-                android:paddingBottom="5dp">
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="20dp">
+
                 <View
                     android:layout_width="100dp"
                     android:layout_height="0.5dp"
-                    android:background="@color/gray_me_line"/>
+                    android:background="@color/gray_me_line" />
+
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:paddingLeft="13dp"
                     android:paddingRight="13dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="@string/cook_details_dixian"
-                    android:textColor="@color/gray_cccccc"/>
+                    android:textColor="@color/gray_cccccc" />
+
                 <View
                     android:layout_width="100dp"
                     android:layout_height="0.5dp"
-                    android:background="@color/gray_me_line"/>
+                    android:background="@color/gray_me_line" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
