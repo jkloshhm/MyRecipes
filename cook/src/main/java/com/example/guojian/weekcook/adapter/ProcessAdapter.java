@@ -50,13 +50,16 @@ public class ProcessAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.process_list_item, null);
             holder.pContent = (TextView) convertView.findViewById(R.id.tv_item_process_content);
             holder.pImageView = (ImageView) convertView.findViewById(R.id.iv_item_process_img);
+            holder.pStep = (TextView) convertView.findViewById(R.id.tv_steps);
             convertView.setTag(holder);
         } else {
             holder = (ProcessViewHolder) convertView.getTag();
         }
 
         ProcessBean processBean = processBeanList.get(position);
-        String ProcessString = (position+1)+". "+processBean.getProcess_pcontent().replace("<br />","");
+        String steps = (position+1)+"";
+        holder.pStep.setText(steps);
+        String ProcessString = processBean.getProcess_pcontent().replace("<br />","");
         holder.pContent.setText(ProcessString);
         String img_url = processBean.getProcess_pic();
         ImageLoaderUtil.setPicBitmap2(holder.pImageView, img_url);
@@ -65,7 +68,7 @@ public class ProcessAdapter extends BaseAdapter {
     }
 
     class ProcessViewHolder {
-        private TextView pContent;
+        private TextView pContent,pStep;
         private ImageView pImageView;
     }
 

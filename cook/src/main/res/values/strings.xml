@@ -9,6 +9,7 @@
     <string name="me">我的</string>
     <string name="me_name">Mary</string>
     <string name="my_collection">我的收藏</string>
+    <string name="my_collection_or_not">确定移除收藏?</string>
     <string name="me_my_information">个人资料</string>
     <string name="me_settings">设置</string>
     <string name="me_share_app">把APP推荐给朋友</string>
@@ -27,6 +28,7 @@
     <string name="my_settings_give_app_score">给app评分</string>
     <string name="my_settings_clean_cache">清除缓存</string>
     <string name="my_settings_my_cache_size">0.00kb</string>
+    <string name="my_settings_my_cache">确定清除缓存?</string>
 
 
     <!--  Remove or change this placeholder text -->

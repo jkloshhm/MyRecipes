@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -54,24 +55,29 @@ public class DetailsActivity extends Activity {
     //是否取消收藏
     public void setCancleColltion() {
         //提示对话框
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(getLayoutInflater().inflate(R.layout.alert_dialog_view, null))
-                .setPositiveButton("是", new DialogInterface.OnClickListener() {
+        AlertDialog builder = new AlertDialog.Builder(this).create();
+        builder.setView(getLayoutInflater().inflate(R.layout.alert_dialog_view, null));
+        builder.setButton(DialogInterface.BUTTON_POSITIVE,"移除", new DialogInterface.OnClickListener() {
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mCollectImg.setImageDrawable(getResources().getDrawable(R.mipmap.collection_gray));
-                        isRed = false;
-                        Toast.makeText(DetailsActivity.this, "已取消收藏~", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .setNegativeButton("否", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mCollectImg.setImageDrawable(getResources().getDrawable(R.mipmap.collection_gray));
+                isRed = false;
+                Toast.makeText(DetailsActivity.this, "已取消收藏~", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setButton(DialogInterface.BUTTON_NEGATIVE,"取消", new DialogInterface.OnClickListener() {
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).show();
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+        Button pButton = builder.getButton(DialogInterface.BUTTON_POSITIVE);
+        pButton.setTextColor(getResources().getColor(R.color.red_theme));
+        Button nButton = builder.getButton(DialogInterface.BUTTON_NEGATIVE);
+        nButton.setTextColor(getResources().getColor(R.color.gray));
     }
 
     @Override
