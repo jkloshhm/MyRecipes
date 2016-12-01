@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context="com.example.guojian.weekcook.activity.MainActivity">
 
     <LinearLayout
@@ -31,7 +33,6 @@
                 android:background="@null"
                 android:hint="请输入中文菜名"
                 android:lines="1"
-                android:focusableInTouchMode="false"
                 android:singleLine="true"
                 android:textColorHint="@color/gray_search_hint"
                 android:textSize="14sp" />
