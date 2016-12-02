@@ -10,7 +10,7 @@ import android.widget.RadioGroup;
 import com.alibaba.apigateway.client.ApiGatewayClient;
 import com.example.guojian.weekcook.R;
 import com.example.guojian.weekcook.adapter.MyFragmentPagerAdapter;
-import com.example.guojian.weekcook.fragment.SearchFragment;
+import com.example.guojian.weekcook.fragment.HomeFragment;
 import com.example.guojian.weekcook.fragment.ClassFragment;
 import com.example.guojian.weekcook.fragment.MeFragment;
 
@@ -74,12 +74,12 @@ public class MainActivity extends FragmentActivity {
          * ViewPager部分
          */
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        SearchFragment weSearchFragment = new SearchFragment();
+        HomeFragment weHomeFragment = new HomeFragment();
         ClassFragment classFragment = new ClassFragment();
         //DiscoveryFragment discoveryFragment = new DiscoveryFragment();
         MeFragment meFragment = new MeFragment();
         List<Fragment> alFragment = new ArrayList<Fragment>();
-        alFragment.add(weSearchFragment);
+        alFragment.add(weHomeFragment);
         alFragment.add(classFragment);
         //alFragment.add(discoveryFragment);
         alFragment.add(meFragment);

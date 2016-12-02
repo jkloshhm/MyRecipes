@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:background="@color/white"
     tools:context="com.example.guojian.weekcook.activity.DetailsActivity">
 
     <LinearLayout
@@ -59,26 +59,29 @@
                 android:id="@+id/iv_collection_img"
                 android:layout_width="20dp"
                 android:layout_height="20.5dp"
-                android:background="@mipmap/collection_gray" />
+                android:src="@mipmap/collection_gray" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_share_the_cook_data"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:clickable="true"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
+            android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
             <ImageView
+                android:id="@+id/iv_share_the_cook_data"
                 android:layout_width="19dp"
                 android:layout_height="21dp"
-                android:background="@mipmap/share" />
+                android:duplicateParentState="true"
+                android:src="@mipmap/share" />
         </LinearLayout>
     </LinearLayout>
 
     <ScrollView
+        android:background="@color/white"
         android:id="@+id/scrollView_details"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
@@ -257,9 +260,9 @@
                     android:id="@+id/lv_listview_material"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:clickable="false"
                     android:divider="@color/gray_me_line"
-                    android:dividerHeight="0.5dp"
-                    android:clickable="false" />
+                    android:dividerHeight="0.5dp" />
 
                 <View
                     android:layout_width="match_parent"

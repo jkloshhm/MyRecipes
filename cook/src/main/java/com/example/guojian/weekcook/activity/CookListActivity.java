@@ -60,32 +60,6 @@ public class CookListActivity extends Activity {
                 finish();
             }
         });
-    }
-/*    final Handler handlerClass = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            Bundle jsonBundle = msg.getData();
-            String classType = jsonBundle.getString("classType");
-            String jsonErrorMessage = jsonBundle.getString("errorMessage");
-            String jsonData = jsonBundle.getString("stringBody");
-            //Log.i(TAG, "--------->>jsonData====" + jsonData);
-            Log.i(TAG, "--------->>jsonErrorMessage====" + jsonErrorMessage);
-            if (jsonData != null) {
-                if (classType != null && classType.equals("GetDataBySearchName")) {//按名称搜索菜谱
-                    getDataAndUpdateUI(jsonData);
-                } else if (classType != null && classType.equals("GetDataClass")) {//分类名称
-
-                } else if (classType != null && classType.equals("GetDataByClassId")) {//分类名称ID
-                    getDataAndUpdateUI(jsonData);
-                }
-            }
-        }
-    };*/
-
-    @Override
-    protected void onResume() {
-        Log.i(TAG, "CookListActivity ____________onResume()");
-        super.onResume();
         initJsonData();
         initDB();
         mCookListAdapter = new CookListAdapter(this, cookBeanList);
@@ -104,6 +78,13 @@ public class CookListActivity extends Activity {
                 }
             }
         });
+    }
+
+
+    @Override
+    protected void onResume() {
+        Log.i(TAG, "CookListActivity ____________onResume()");
+        super.onResume();
     }
 
     private void initJsonData() {

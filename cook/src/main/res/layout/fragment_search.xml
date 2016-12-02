@@ -3,68 +3,80 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    android:orientation="vertical"
     tools:context="com.example.guojian.weekcook.activity.MainActivity">
 
     <LinearLayout
+        android:id="@+id/ll_search"
         android:layout_width="match_parent"
-        android:layout_height="47dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/shape"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/shape"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/et_search_name"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_search_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:focusable="false"
+                    android:hint="请输入中文菜名"
+                    android:lines="1"
+                    android:visibility="gone"
+                    android:singleLine="true"
+                    android:textColorHint="@color/gray_search_hint"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="@null"
-                android:hint="请输入中文菜名"
-                android:lines="1"
-                android:singleLine="true"
-                android:textColorHint="@color/gray_search_hint"
-                android:textSize="14sp" />
+                android:layout_marginRight="15dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/btn_show"
+                    android:layout_width="14dp"
+                    android:layout_height="15dp"
+                    android:src="@mipmap/img_search" />
+            </LinearLayout>
+
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_search"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginRight="15dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/btn_show"
-                android:layout_width="22dp"
-                android:layout_height="23dp"
-                android:src="@mipmap/img_search" />
-        </LinearLayout>
-
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray_mean_line" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
 
             <RelativeLayout
@@ -76,8 +88,7 @@
                     android:id="@+id/img001"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/image_demo" />
+                    android:scaleType="centerCrop" />
 
                 <TextView
                     android:id="@+id/text001"
@@ -100,8 +111,7 @@
                     android:id="@+id/img002"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/image_demo" />
+                    android:scaleType="centerCrop" />
 
                 <TextView
                     android:id="@+id/text002"
@@ -124,8 +134,7 @@
                     android:id="@+id/img003"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/image_demo" />
+                    android:scaleType="centerCrop" />
 
                 <TextView
                     android:id="@+id/text003"

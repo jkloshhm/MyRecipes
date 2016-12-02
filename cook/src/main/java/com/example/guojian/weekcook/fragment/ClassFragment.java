@@ -49,24 +49,6 @@ public class ClassFragment extends Fragment {
     private static ChildrenClassAdapter childrenClassAdapter;
     private MyHandler myHandler = new MyHandler(this);
     private View headerView, footerView;
-/*    private final static Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            Bundle jsonBundle = msg.getData();
-            String classType = jsonBundle.getString("classType");
-            String jsonErrorMessage = jsonBundle.getString("errorMessage");
-            String jsonData = jsonBundle.getString("stringBody");
-            //Log.i(TAG, "--------->>jsonData====" + jsonData);
-            //Log.i(TAG, "--------->>jsonErrorMessage====" + jsonErrorMessage);
-            if (jsonData != null) {
-                if (classType != null && classType.equals("GetDataClass")) {//分类名称
-                    getDataAndUpdateUI(jsonData);
-                }
-            }
-            mListViewParent.setAdapter(parentClassAdapter);
-            initChildrenView(0);
-        }
-    };*/
 
     public ClassFragment() {
         // Required empty public constructor

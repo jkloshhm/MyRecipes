@@ -2,10 +2,16 @@ package com.example.guojian.weekcook.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,21 +32,25 @@ import com.example.guojian.weekcook.bean.MaterialBean;
 import com.example.guojian.weekcook.bean.ProcessBean;
 import com.example.guojian.weekcook.dao.DBServices;
 import com.example.guojian.weekcook.dao.MyDBServiceUtils;
+import com.example.guojian.weekcook.utils.GetBitmapFromSdCardUtil;
 import com.example.guojian.weekcook.utils.ImageLoaderUtil;
+import com.example.guojian.weekcook.utils.ScreenShotUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DetailsActivity extends Activity {
+    public static String DCIMCamera_PATH = Environment
+            .getExternalStorageDirectory() + "/Cooking/ScreenShotImg/";
     private static DBServices db;
     private static ArrayList<CookBean> cookBeanlist;
     private static ArrayList<String> cookIdList = new ArrayList<>();
+    private static ProgressDialog dialog;
+    Context context;
     private String realIp;
     private CookBean cookBean;
-    private ImageView mCollectImg, mDetailsImage;
-    private CookBean cookBeanSQL;
-    private MyDBServiceUtils mService;
+    private ImageView mCollectImg, mDetailsImage, mShareImg;
     private List<MaterialBean> materialBeanlist;
     private List<ProcessBean> processBeenlist;
     private ListView mListViewMaterial, mListViewProcess;
@@ -51,13 +61,15 @@ public class DetailsActivity extends Activity {
     private boolean isRed;
     private TextView mName, mContent, mPeopleNum, mCookingTime, mTag;
     private String TAG = "jkloshhm-----------DetailsActivity------";
+    private Button btn_refresh;
+    private Handler refrsh_handler;
 
     //是否取消收藏
     public void setCancleColltion() {
         //提示对话框
         AlertDialog builder = new AlertDialog.Builder(this).create();
         builder.setView(getLayoutInflater().inflate(R.layout.alert_dialog_view, null));
-        builder.setButton(DialogInterface.BUTTON_POSITIVE,"移除", new DialogInterface.OnClickListener() {
+        builder.setButton(DialogInterface.BUTTON_POSITIVE, "移除", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -66,7 +78,7 @@ public class DetailsActivity extends Activity {
                 Toast.makeText(DetailsActivity.this, "已取消收藏~", Toast.LENGTH_SHORT).show();
             }
         });
-        builder.setButton(DialogInterface.BUTTON_NEGATIVE,"取消", new DialogInterface.OnClickListener() {
+        builder.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -83,26 +95,32 @@ public class DetailsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getApplicationContext();
+
         Log.i(TAG, "DetailsActivity____________onCreate()");
         setContentView(R.layout.activity_details);
         initViews();
+
         mShareLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                for (int i = 0; i < mScrollView.getChildCount(); i++) {
+                    mScrollView.getChildAt(i).setBackgroundColor(Color.parseColor("#ffffff"));
+
+                }
+                Log.i(TAG, "点击了分享~~~~");
+                dialog = new ProgressDialog(DetailsActivity.this);
+                dialog.setMessage("截屏中，请稍等...");
+                dialog.show();
+                //开始执行AsyncTask，并传入某些数据
+                new ScreenShotTask().execute("New Text");
                 /*ScreenShot.savePic(ScreenShot.compressImage(ScreenShot
                         .getBitmapByView(mScrollView)));
                 Toast.makeText(DetailsActivity.this, "open file", Toast.LENGTH_SHORT).show();
                 String fname = ScreenShot.savePic(ScreenShot.getBitmapByView(mScrollView));
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.parse("file://"+fname), "image*//*");
+                intent.setDataAndType(Uri.parse("file://"+fname), "image");
                 Toast.makeText(DetailsActivity.this, "open file", Toast.LENGTH_SHORT).show();*/
-                /*new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                }).start();*/
-
             }
         });
     }
@@ -141,20 +159,6 @@ public class DetailsActivity extends Activity {
                 }
             }
         });
-    }
-
-    /**
-     * 获取SDCard的目录路径功能
-     */
-    private String getSDCardPath() {
-        File sdcardDir = null;
-        // 判断SDCard是否存在
-        boolean sdcardExist = Environment.getExternalStorageState().equals(
-                android.os.Environment.MEDIA_MOUNTED);
-        if (sdcardExist) {
-            sdcardDir = Environment.getExternalStorageDirectory();
-        }
-        return sdcardDir.toString();
     }
 
     @Override
@@ -211,6 +215,7 @@ public class DetailsActivity extends Activity {
     }
 
     private void initViews() {
+        mShareImg = (ImageView) findViewById(R.id.iv_share_the_cook_data);
         mScrollView = (ScrollView) findViewById(R.id.scrollView_details);
         mShareLinearLayout = (LinearLayout) findViewById(R.id.ll_share_the_cook_data);
         mButtonBack = (LinearLayout) findViewById(R.id.ll_details_back_to_list);
@@ -262,4 +267,65 @@ public class DetailsActivity extends Activity {
         Log.i(TAG, "DetailsActivity ____________onStop()");
         super.onStop();
     }
+
+    private class ScreenShotTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                if (GetBitmapFromSdCardUtil.hasSdcard()) {
+                    String fileName = ScreenShotUtils.savePic(ScreenShotUtils.getScrollViewBitmap(mScrollView));
+                    shareMsg("DetailsActivity",null,null,fileName);
+                    //线程睡眠5秒，模拟耗时操作，这里面的内容Android系统会自动为你启动一个新的线程执行
+                    //Thread.sleep(5000);
+                } else {
+                    Toast.makeText(getApplicationContext(), "无SD卡,存储失败!", Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return params[0];
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //更新UI的操作，这里面的内容是在UI线程里面执行的
+            dialog.dismiss();
+            Toast.makeText(getApplicationContext(), "截图已保存", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    /**
+     * 分享功能
+     *
+     * @param activityTitle
+     *            Activity的名字
+     * @param msgTitle
+     *            消息标题
+     * @param msgText
+     *            消息内容
+     * @param imgPath
+     *            图片路径，不分享图片则传null
+     */
+    public void shareMsg(String activityTitle, String msgTitle, String msgText,
+                         String imgPath) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        if (imgPath == null || imgPath.equals("")) {
+            intent.setType("text/plain"); // 纯文本
+        } else {
+            File f = new File(imgPath);
+            if (f != null && f.exists() && f.isFile()) {
+                intent.setType("image/*");
+                Uri u = Uri.fromFile(f);
+                intent.putExtra(Intent.EXTRA_STREAM, u);
+            }
+        }
+        intent.putExtra(Intent.EXTRA_SUBJECT, msgTitle);
+        intent.putExtra(Intent.EXTRA_TEXT, msgText);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(Intent.createChooser(intent, activityTitle));
+    }
+
+
 }

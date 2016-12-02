@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +15,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.guojian.weekcook.R;
-import com.example.guojian.weekcook.activity.CookListActivity;
+import com.example.guojian.weekcook.activity.SearchActivity;
 import com.example.guojian.weekcook.utils.GetJsonUtils;
 import com.example.guojian.weekcook.utils.ImageLoaderUtil;
 import com.example.guojian.weekcook.utils.RadomNum;
@@ -34,7 +32,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchFragment extends Fragment {
+public class HomeFragment extends Fragment {
     private static String TAG = "jkloshhm___SearchFragment";
     private static TextView textView001, textView002, textView003;
     private static ImageView img001, img002, img003;
@@ -46,7 +44,7 @@ public class SearchFragment extends Fragment {
             String jsonErrorMessage = jsonBundle.getString("errorMessage");
             String jsonData = jsonBundle.getString("stringBody");
             String tag = jsonBundle.getString("tag");
-            Log.i(TAG, "--------->>jsonData====" + jsonData);
+            //Log.i(TAG, "--------->>jsonData====" + jsonData);
             //Log.i(TAG, "--------->>jsonErrorMessage====" + jsonErrorMessage);
             if (jsonData != null) {
                 if (classType != null && classType.equals("GetDataBySearchNameId")) {//搜索名称ID
@@ -60,7 +58,7 @@ public class SearchFragment extends Fragment {
     private SharedPreferences.Editor editor;
     private Context mContext;
 
-    public SearchFragment() {
+    public HomeFragment() {
         // Required empty public constructor
     }
 
@@ -114,7 +112,9 @@ public class SearchFragment extends Fragment {
         mSearchLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(mSearchName.getText().toString().trim())) {
+                Intent mIntent = new Intent(mContext, SearchActivity.class);
+                mContext.startActivity(mIntent);
+                /*if (TextUtils.isEmpty(mSearchName.getText().toString().trim())) {
                     Toast.makeText(mContext, "请输入正确的菜名", Toast.LENGTH_SHORT).show();
                 } else {
                     //setEditTextInhibitInputSpeChat(mSearchName);
@@ -122,7 +122,7 @@ public class SearchFragment extends Fragment {
                     mIntent.putExtra("CookType", "GetDataBySearchName");
                     mIntent.putExtra("name", mSearchName.getText().toString().replace(" ", ""));
                     mContext.startActivity(mIntent);
-                }
+                }*/
             }
         });
 

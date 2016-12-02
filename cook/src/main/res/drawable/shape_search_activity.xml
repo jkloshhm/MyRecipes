@@ -6,10 +6,10 @@
         android:width="0.5dp"
         android:color="@color/red_edit_background" />
     <padding
-        android:bottom="10dp"
-        android:left="20dp"
-        android:right="10dp"
-        android:top="10dp" />
+        android:bottom="0dp"
+        android:left="0dp"
+        android:right="0dp"
+        android:top="0dp" />
 
     <corners android:radius="60dp" />
 

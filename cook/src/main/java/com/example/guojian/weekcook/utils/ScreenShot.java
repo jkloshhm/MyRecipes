@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.os.Environment;
+import android.util.Log;
 import android.widget.ScrollView;
 
 import java.io.ByteArrayInputStream;
@@ -21,8 +23,11 @@ import java.util.Locale;
  */
 public class ScreenShot {
 
+    private static String path = Environment.getExternalStorageDirectory() + "/Cooking/screenShotImg/";// sd路径
+
     /**
      * 截取scrollview的屏幕
+     *
      * @param scrollView
      * @return
      */
@@ -45,6 +50,7 @@ public class ScreenShot {
 
     /**
      * 压缩图片
+     *
      * @param image
      * @return
      */
@@ -52,7 +58,7 @@ public class ScreenShot {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         // 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        int options = 99;
+        int options = 90;
         // 循环判断如果压缩后图片是否大于100kb,大于继续压缩
         while (baos.toByteArray().length / 1024 > 100) {
             // 重置baos
@@ -71,13 +77,14 @@ public class ScreenShot {
 
     /**
      * 保存到sdcard
+     *
      * @param b
      * @return
      */
     public static String savePic(Bitmap b) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss",
                 Locale.US);
-        File outfile = new File("/sdcard/image");
+        File outfile = new File(path);
         // 如果文件不存在，则创建一个新文件
         if (!outfile.isDirectory()) {
             try {
@@ -86,20 +93,28 @@ public class ScreenShot {
                 e.printStackTrace();
             }
         }
-        String fname = outfile + "/" + sdf.format(new Date()) + ".png";
-        FileOutputStream fos = null;
+        String fName = outfile + "/" + sdf.format(new Date()) + ".png";
+
+        File file = new File(fName);
         try {
-            fos = new FileOutputStream(fname);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileOutputStream fos = null;
+
+            fos = new FileOutputStream(fName);
             if (null != fos) {
                 b.compress(Bitmap.CompressFormat.PNG, 90, fos);
                 fos.flush();
                 fos.close();
             }
+
+            Log.i("TAGATATATAATTAT", "截屏文件已保存至SDCard/AndyDemo/ScreenImage/下");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return fname;
+        return fName;
     }
 }
