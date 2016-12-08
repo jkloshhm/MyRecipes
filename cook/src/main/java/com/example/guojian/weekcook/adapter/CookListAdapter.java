@@ -73,7 +73,7 @@ public class CookListAdapter extends BaseAdapter {
         holder.mCookingTime.setText(mCookingTimeString);
         String image_url = cookBean.getPic();
 
-        ImageLoaderUtil.setPicBitmap2(holder.imageView, image_url);
+        ImageLoaderUtil.setRoundedBitmap(holder.imageView, image_url);
         return convertView;
     }
 

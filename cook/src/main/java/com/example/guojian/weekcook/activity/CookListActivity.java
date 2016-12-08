@@ -80,7 +80,6 @@ public class CookListActivity extends Activity {
         });
     }
 
-
     @Override
     protected void onResume() {
         Log.i(TAG, "CookListActivity ____________onResume()");

@@ -89,8 +89,6 @@ public class GetJsonUtils {
         });
     }
 
-
-
     public static void GetDataClass(final Handler handler) {
         RpcService rpcService = ApiGatewayClient.getRpcService();
         final ApiRequest apiRequest = new ApiRequest();

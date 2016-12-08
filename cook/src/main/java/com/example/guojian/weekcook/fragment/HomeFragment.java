@@ -69,16 +69,23 @@ public class HomeFragment extends Fragment {
     private SharedPreferences.Editor editor;
     private int imgId[] = {R.mipmap.nangua, R.mipmap.muer, R.mipmap.ou, R.mipmap.shanyao,
             R.mipmap.baicai, R.mipmap.hongshu, R.mipmap.yangrou, R.mipmap.niurou};
-    private String imgName[] = {"南瓜", "木耳", "藕", "山药", "白菜", "红薯", "羊肉", "牛肉",};
-    private GridView mGridViewHotMaterial;
+    private String imgName[] = {"南瓜", "木耳", "藕", "山药", "白菜", "红薯", "羊肉", "牛肉"};
+    private int imgIdFood[] = {R.mipmap.image_demo, R.mipmap.muer, R.mipmap.image_demo, R.mipmap.shanyao,
+            R.mipmap.image_demo, R.mipmap.hongshu, R.mipmap.image_demo, R.mipmap.niurou};
+    private String imgNameFood[] = {"私房菜", "陕西小吃", "意大利菜", "减肥",
+            "快手菜", "北京小吃", "川菜", "美容"};
+    private String classId[] = {"303", "285", "258", "2", "304", "270", "224", "6"};
+
+    private GridView mGridViewHotMaterial, mGridViewHotClassFood;
     private List<Map<String, Object>> mHotMaterialList;
-    private SimpleAdapter mHotMaterialSimpleAdapter;
+    private List<Map<String, Object>> mHotClassFoodList;
+    private SimpleAdapter mHotMaterialSimpleAdapter, mHotClassFoodSimpleAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
-    private static void getDataAndUpdateUI(String data, String tag) {
+    private void getDataAndUpdateUI(String data, String tag) {
         if (tag != null) {
             try {
                 JSONObject dataJsonObject = new JSONObject(data);
@@ -175,12 +182,46 @@ public class HomeFragment extends Fragment {
         setViewPager();
 
         mGridViewHotMaterial = (GridView) view.findViewById(R.id.gv_hot_material);
+        setUpViewHotMaterial();
+        mGridViewHotClassFood = (GridView) view.findViewById(R.id.gv_hot_class_food);
+        setUpViewHotClassFood();
+        return view;
+    }
+
+    private void setUpViewHotClassFood() {
         //新建List
-        mHotMaterialList = new ArrayList<Map<String, Object>>();
+        mHotClassFoodList = new ArrayList<Map<String, Object>>();
         //获取数据
-        getGridViewHotMaterialData();
+        getHotClassFoodData();
         //新建适配器
-        String[] from = {"image","name"};
+        String[] from = {"image", "name"};
+        int[] to = {R.id.iv_hot_class_food_item_img, R.id.tv_hot_class_food_item_name};
+        mHotClassFoodSimpleAdapter = new SimpleAdapter(mContext, mHotClassFoodList,
+                R.layout.hot_class_food_gv_adapter_item, from, to);
+        //配置适配器
+        mGridViewHotClassFood.setAdapter(mHotClassFoodSimpleAdapter);
+        mGridViewHotClassFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Map<String, Object> map1 = mHotClassFoodList.get(position);
+                String classId = (String) map1.get("classId");
+                String name = (String) map1.get("name");
+                Intent intent = new Intent(mContext, CookListActivity.class);
+                intent.putExtra("classId", classId);
+                intent.putExtra("name", name);
+                intent.putExtra("CookType", "GetDataByClassId");
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setUpViewHotMaterial() {
+        //新建List
+        mHotMaterialList = new ArrayList<>();
+        //获取数据
+        getHotMaterialData();
+        //新建适配器
+        String[] from = {"image", "name"};
         int[] to = {R.id.iv_hot_material_item_img, R.id.tv_hot_material_item_name};
         mHotMaterialSimpleAdapter = new SimpleAdapter(mContext, mHotMaterialList, R.layout.hot_material_gv_adapter_item, from, to);
         //配置适配器
@@ -188,27 +229,37 @@ public class HomeFragment extends Fragment {
         mGridViewHotMaterial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Map<String, Object> map = new HashMap<String, Object>();
-                map = mHotMaterialList.get(position);
+                Map<String, Object> map = mHotMaterialList.get(position);
                 String name = (String) map.get("name");
-                Intent intent = new Intent(mContext,CookListActivity.class);
-                intent.putExtra("name",name);
-                intent.putExtra("CookType","GetDataBySearchName");
+                Intent intent = new Intent(mContext, CookListActivity.class);
+                intent.putExtra("name", name);
+                intent.putExtra("CookType", "GetDataBySearchName");
                 startActivity(intent);
             }
         });
-        return view;
     }
 
-    public List<Map<String, Object>> getGridViewHotMaterialData() {
+    public List<Map<String, Object>> getHotMaterialData() {
         //cion和iconName的长度是相同的，这里任选其一都可以
         for (int i = 0; i < imgId.length; i++) {
-            Map<String, Object> map = new HashMap<String, Object>();
+            Map<String, Object> map = new HashMap<>();
             map.put("name", imgName[i]);
             map.put("image", imgId[i]);
             mHotMaterialList.add(map);
         }
         return mHotMaterialList;
+    }
+
+    public List<Map<String, Object>> getHotClassFoodData() {
+        //cion和iconName的长度是相同的，这里任选其一都可以
+        for (int i = 0; i < imgIdFood.length; i++) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("name", imgNameFood[i]);
+            map.put("image", imgIdFood[i]);
+            map.put("classId", classId[i]);
+            mHotClassFoodList.add(map);
+        }
+        return mHotClassFoodList;
     }
 
     private void setViewPager() {

@@ -51,11 +51,15 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="10dp">
-
-            <com.example.guojian.weekcook.adapter.AutoPlayingViewPager
-                android:id="@+id/auto_play_viewpager"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="wrap_content">
+                <com.example.guojian.weekcook.adapter.AutoPlayingViewPager
+                    android:id="@+id/auto_play_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@mipmap/loading1"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -89,9 +93,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:horizontalSpacing="20dp"
-                    android:verticalSpacing="16dp"
                     android:numColumns="4"
-                    android:scrollbars="none" />
+                    android:scrollbars="none"
+                    android:verticalSpacing="16dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -114,6 +118,48 @@
                     android:text="@string/cook_book_hand_select"
                     android:textColor="@color/gray_content_color_333333"
                     android:textSize="17sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <com.example.guojian.weekcook.MyGridView
+                    android:id="@+id/gv_hot_class_food"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:horizontalSpacing="20dp"
+                    android:numColumns="4"
+                    android:scrollbars="none"
+                    android:verticalSpacing="16dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="20dp">
+
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray_me_line" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
+                    android:text="@string/cook_details_dixian"
+                    android:textColor="@color/gray_cccccc" />
+
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray_me_line" />
             </LinearLayout>
 
         </LinearLayout>

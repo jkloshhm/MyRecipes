@@ -7,7 +7,7 @@
     <color name="red_theme">#FB6269</color>
     <color name="red_edit_background">#f2c4c5</color>
     <color name="red_children_background">#bfbfbf</color>
-    <color name="white">#FFFFFF</color>
+    <color name="white">#FFFFFFFF</color>
     <color name="black">#000000</color>
     <color name="gray_class_background_f5f5f5">#F5F5F5</color>
     <color name="gray_mean_line">#DBDBDB</color>
