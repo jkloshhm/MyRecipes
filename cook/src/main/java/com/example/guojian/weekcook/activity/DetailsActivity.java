@@ -114,13 +114,7 @@ public class DetailsActivity extends Activity {
                 dialog.show();
                 //开始执行AsyncTask，并传入某些数据
                 new ScreenShotTask().execute("New Text");
-                /*ScreenShot.savePic(ScreenShot.compressImage(ScreenShot
-                        .getBitmapByView(mScrollView)));
-                Toast.makeText(DetailsActivity.this, "open file", Toast.LENGTH_SHORT).show();
-                String fname = ScreenShot.savePic(ScreenShot.getBitmapByView(mScrollView));
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.parse("file://"+fname), "image");
-                Toast.makeText(DetailsActivity.this, "open file", Toast.LENGTH_SHORT).show();*/
+
             }
         });
     }

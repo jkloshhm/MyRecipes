@@ -98,6 +98,8 @@ public class CookListActivity extends Activity {
             public void run() {
                 if (CookType.equals("GetDataByClassId")) {
                     GetJsonUtils.GetDataByClassId(mMyHandler, classId);
+                    Log.i(TAG,"classId=======" + classId);
+                    //Toast.makeText(CookListActivity.this, classId+"G OK", Toast.LENGTH_SHORT).show();
                 } else if (CookType.equals("GetDataBySearchName")) {
                     GetJsonUtils.GetDataBySearchName(mMyHandler, name);
                 }

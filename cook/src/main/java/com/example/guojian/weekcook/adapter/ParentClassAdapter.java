@@ -71,7 +71,7 @@ public class ParentClassAdapter extends BaseAdapter {
             holder.textView.setPressed(true);
             holder.textView.setSelected(true);
             //holder.linearLayout.setBackgroundColor(Color.GREEN);
-            holder.linearLayout.setBackgroundResource(R.color.gray_class_background);
+            holder.linearLayout.setBackgroundResource(R.color.gray_class_background_f5f5f5);
         } else {
             holder.textView.setSelected(false);
             holder.textView.setPressed(false);

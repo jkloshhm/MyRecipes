@@ -16,11 +16,11 @@ import java.util.List;
 /**
  * Created by guojian on 11/4/16.
  */
-public class ChildrenClassAdapter1 extends BaseAdapter {
+public class HotMaterialAdapter extends BaseAdapter {
     private Context context;
     private List<ChildrenClassBean> childrenClassList;
 
-    public ChildrenClassAdapter1(List<ChildrenClassBean> childrenClassList, Context context) {
+    public HotMaterialAdapter(List<ChildrenClassBean> childrenClassList, Context context) {
         this.childrenClassList = childrenClassList;
         this.context = context;
     }

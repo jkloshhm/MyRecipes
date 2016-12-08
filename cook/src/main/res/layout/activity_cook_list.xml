@@ -42,8 +42,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/me_my_information"
-                android:textSize="18sp"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -58,7 +58,7 @@
                 android:layout_width="9dp"
                 android:layout_height="16.5dp"
                 android:background="@mipmap/back_black"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
         </LinearLayout>
     </LinearLayout>
 
@@ -102,13 +102,13 @@
         android:orientation="vertical">
 
         <ListView
-            android:visibility="gone"
             android:id="@+id/lv_cook_list"
-            android:dividerHeight="0.5dp"
-            android:divider="@color/gray_me_line"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:divider="@color/gray_me_line"
+            android:dividerHeight="0.5dp"
+            android:fadingEdge="vertical"
+            android:visibility="gone" />
     </LinearLayout>
-
 
 </LinearLayout>
