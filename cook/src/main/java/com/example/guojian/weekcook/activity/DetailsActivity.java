@@ -15,15 +15,16 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.guojian.weekcook.MyScrollView;
 import com.example.guojian.weekcook.R;
 import com.example.guojian.weekcook.adapter.MaterialAdapter;
 import com.example.guojian.weekcook.adapter.ProcessAdapter;
@@ -40,7 +41,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailsActivity extends Activity {
+public class DetailsActivity extends Activity implements MyScrollView.OnScrollListener {
     public static String DCIMCamera_PATH = Environment
             .getExternalStorageDirectory() + "/Cooking/ScreenShotImg/";
     private static DBServices db;
@@ -56,16 +57,21 @@ public class DetailsActivity extends Activity {
     private ListView mListViewMaterial, mListViewProcess;
     private MaterialAdapter mMaterialAdapter;
     private ProcessAdapter mProcessAdapter;
-    private LinearLayout mlinearLayout, mCollectLinearLayout, mButtonBack, mShareLinearLayout;
-    private ScrollView mScrollView;
+    private LinearLayout mDetailsTitleLinearLayout, mCollectLinearLayout, mButtonBack, mShareLinearLayout,
+            mEndMessage, mEndMessageScreenShot;
+    private MyScrollView mScrollView;
     private boolean isRed;
     private TextView mName, mContent, mPeopleNum, mCookingTime, mTag;
     private String TAG = "jkloshhm-----------DetailsActivity------";
     private Button btn_refresh;
     private Handler refrsh_handler;
+    private WindowManager mWindowManager;
+    private int screenWidth;//手机屏幕宽度
+    private int mDetailsTitleHeight;//标题栏的高度
+    private int mScrollViewTop;//标题栏的高度
 
     //是否取消收藏
-    public void setCancleColltion() {
+    public void setCancelCollection() {
         //提示对话框
         AlertDialog builder = new AlertDialog.Builder(this).create();
         builder.setView(getLayoutInflater().inflate(R.layout.alert_dialog_view, null));
@@ -96,27 +102,91 @@ public class DetailsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
-
-        Log.i(TAG, "DetailsActivity____________onCreate()");
         setContentView(R.layout.activity_details);
         initViews();
-
         mShareLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 for (int i = 0; i < mScrollView.getChildCount(); i++) {
                     mScrollView.getChildAt(i).setBackgroundColor(Color.parseColor("#ffffff"));
-
                 }
                 Log.i(TAG, "点击了分享~~~~");
                 dialog = new ProgressDialog(DetailsActivity.this);
                 dialog.setMessage("截屏中，请稍等...");
                 dialog.show();
                 //开始执行AsyncTask，并传入某些数据
+                mEndMessage.setVisibility(View.GONE);
+                mEndMessageScreenShot.setVisibility(View.VISIBLE);
                 new ScreenShotTask().execute("New Text");
-
             }
         });
+        mScrollView.setOnScrollListener(this);
+        mWindowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        screenWidth = mWindowManager.getDefaultDisplay().getWidth();
+    }
+
+    @Override
+    public void onScroll(int scrollY) {
+
+        if (scrollY >= screenWidth - mDetailsTitleHeight) {
+            mDetailsTitleLinearLayout.setBackgroundColor(getResources().getColor(R.color.red_theme));
+        } else if (scrollY > 0 && scrollY <= screenWidth - mDetailsTitleHeight) {
+            updateActionBarAlpha(scrollY*(255-25)/(screenWidth - mDetailsTitleHeight)+25);
+            mDetailsTitleLinearLayout.setBackgroundColor(getResources().getColor(R.color.white_00FFFFFF));
+        }else if (scrollY <= screenWidth - mDetailsTitleHeight) {
+            mDetailsTitleLinearLayout.setBackgroundColor(getResources().getColor(R.color.white_00FFFFFF));
+        }
+    }
+
+    /**
+     * 窗口有焦点的时候，即所有的布局绘制完毕的时候，我们来获取购买布局的高度和myScrollView距离父类布局的顶部位置
+     */
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            mDetailsTitleHeight = mDetailsTitleLinearLayout.getHeight();
+            //buyLayoutTop = mBuyLayout.getTop();
+            mScrollViewTop = mScrollView.getTop();
+        }
+    }
+
+    public void setActionBarAlpha(int alpha) throws Exception {
+        if (mDetailsTitleLinearLayout == null || mScrollView == null) {
+            throw new Exception("acitonBar is not binding or bgDrawable is not set.");
+        }
+        mDetailsTitleLinearLayout.setAlpha(alpha);
+        //mActionBar.setBackgroundDrawable(mBgDrawable);
+    }
+
+    void updateActionBarAlpha(int alpha) {
+        try {
+            setActionBarAlpha(alpha);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void initViews() {
+        mShareImg = (ImageView) findViewById(R.id.iv_share_the_cook_data);
+        mScrollView = (MyScrollView) findViewById(R.id.scrollView_details);
+        mDetailsTitleLinearLayout = (LinearLayout) findViewById(R.id.ll_details_title);
+        mShareLinearLayout = (LinearLayout) findViewById(R.id.ll_share_the_cook_data);
+        mButtonBack = (LinearLayout) findViewById(R.id.ll_details_back_to_list);
+        mCollectLinearLayout = (LinearLayout) findViewById(R.id.ll_collect_the_cook_data);
+        mCollectImg = (ImageView) findViewById(R.id.iv_collection_img);
+        mDetailsImage = (ImageView) findViewById(R.id.iv_details_img);
+        mName = (TextView) findViewById(R.id.tv_details_cook_name);
+        mContent = (TextView) findViewById(R.id.tv_details_cook_content);
+        mPeopleNum = (TextView) findViewById(R.id.tv_details_cook_peoplenum);
+        mCookingTime = (TextView) findViewById(R.id.tv_details_cook_cookingtime);
+        mTag = (TextView) findViewById(R.id.tv_details_cook_tag);
+        mListViewMaterial = (ListView) findViewById(R.id.lv_listview_material);
+        mListViewProcess = (ListView) findViewById(R.id.lv_listview_process);
+        //mlinearLayout = (LinearLayout) findViewById(R.id.linear1);
+        mEndMessage = (LinearLayout) findViewById(R.id.ll_end_message);
+        mEndMessageScreenShot = (LinearLayout) findViewById(R.id.ll_end_message_screen_shot);
     }
 
     @Override
@@ -145,7 +215,7 @@ public class DetailsActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (isRed) {//删除
-                    setCancleColltion();
+                    setCancelCollection();
                 } else {
                     mCollectImg.setImageDrawable(getResources().getDrawable(R.mipmap.collection_red));
                     isRed = true;
@@ -208,23 +278,6 @@ public class DetailsActivity extends Activity {
 
     }
 
-    private void initViews() {
-        mShareImg = (ImageView) findViewById(R.id.iv_share_the_cook_data);
-        mScrollView = (ScrollView) findViewById(R.id.scrollView_details);
-        mShareLinearLayout = (LinearLayout) findViewById(R.id.ll_share_the_cook_data);
-        mButtonBack = (LinearLayout) findViewById(R.id.ll_details_back_to_list);
-        mCollectLinearLayout = (LinearLayout) findViewById(R.id.ll_collect_the_cook_data);
-        mCollectImg = (ImageView) findViewById(R.id.iv_collection_img);
-        mDetailsImage = (ImageView) findViewById(R.id.iv_details_img);
-        mName = (TextView) findViewById(R.id.tv_details_cook_name);
-        mContent = (TextView) findViewById(R.id.tv_details_cook_content);
-        mPeopleNum = (TextView) findViewById(R.id.tv_details_cook_peoplenum);
-        mCookingTime = (TextView) findViewById(R.id.tv_details_cook_cookingtime);
-        mTag = (TextView) findViewById(R.id.tv_details_cook_tag);
-        mListViewMaterial = (ListView) findViewById(R.id.lv_listview_material);
-        mListViewProcess = (ListView) findViewById(R.id.lv_listview_process);
-        mlinearLayout = (LinearLayout) findViewById(R.id.linear1);
-    }
 
     public void setListViewHeightBasedOnChildren1(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
@@ -262,13 +315,40 @@ public class DetailsActivity extends Activity {
         super.onStop();
     }
 
+    /**
+     * 分享功能
+     *
+     * @param activityTitle Activity的名字
+     * @param msgTitle      消息标题
+     * @param msgText       消息内容
+     * @param imgPath       图片路径，不分享图片则传null
+     */
+    public void shareMsg(String activityTitle, String msgTitle, String msgText,
+                         String imgPath) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        if (imgPath == null || imgPath.equals("")) {
+            intent.setType("text/plain"); // 纯文本
+        } else {
+            File f = new File(imgPath);
+            if (f != null && f.exists() && f.isFile()) {
+                intent.setType("image/*");
+                Uri u = Uri.fromFile(f);
+                intent.putExtra(Intent.EXTRA_STREAM, u);
+            }
+        }
+        intent.putExtra(Intent.EXTRA_SUBJECT, msgTitle);
+        intent.putExtra(Intent.EXTRA_TEXT, msgText);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(Intent.createChooser(intent, activityTitle));
+    }
+
     private class ScreenShotTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
             try {
                 if (GetBitmapFromSdCardUtil.hasSdcard()) {
                     String fileName = ScreenShotUtils.savePic(ScreenShotUtils.getScrollViewBitmap(mScrollView));
-                    shareMsg("DetailsActivity",null,null,fileName);
+                    shareMsg("分享到...", null, null, fileName);
                     //线程睡眠5秒，模拟耗时操作，这里面的内容Android系统会自动为你启动一个新的线程执行
                     //Thread.sleep(5000);
                 } else {
@@ -288,37 +368,6 @@ public class DetailsActivity extends Activity {
             Toast.makeText(getApplicationContext(), "截图已保存", Toast.LENGTH_SHORT).show();
         }
 
-    }
-
-    /**
-     * 分享功能
-     *
-     * @param activityTitle
-     *            Activity的名字
-     * @param msgTitle
-     *            消息标题
-     * @param msgText
-     *            消息内容
-     * @param imgPath
-     *            图片路径，不分享图片则传null
-     */
-    public void shareMsg(String activityTitle, String msgTitle, String msgText,
-                         String imgPath) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        if (imgPath == null || imgPath.equals("")) {
-            intent.setType("text/plain"); // 纯文本
-        } else {
-            File f = new File(imgPath);
-            if (f != null && f.exists() && f.isFile()) {
-                intent.setType("image/*");
-                Uri u = Uri.fromFile(f);
-                intent.putExtra(Intent.EXTRA_STREAM, u);
-            }
-        }
-        intent.putExtra(Intent.EXTRA_SUBJECT, msgTitle);
-        intent.putExtra(Intent.EXTRA_TEXT, msgText);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(Intent.createChooser(intent, activityTitle));
     }
 
 

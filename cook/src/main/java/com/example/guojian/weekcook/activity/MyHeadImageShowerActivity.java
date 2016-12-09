@@ -36,8 +36,12 @@ public class MyHeadImageShowerActivity extends AppCompatActivity {
             if (bt != null) {
                 @SuppressWarnings("deprecation")
                 Drawable drawable = new BitmapDrawable(bt);
-                if (imageView != null) imageView.setImageDrawable(drawable);
-                if (bt.isRecycled()) bt.recycle();
+                if (imageView != null) {
+                    imageView.setImageDrawable(drawable);
+                }
+                if (bt.isRecycled()) {
+                    bt.recycle();
+                }
             }
         }
     }

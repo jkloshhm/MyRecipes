@@ -4,83 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:clipToPadding="true"
-    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.example.guojian.weekcook.activity.DetailsActivity">
-
-    <LinearLayout
-        android:id="@+id/ll_details_title"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/ll_details_back_to_list"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
-
-            <ImageView
-                android:id="@+id/bn_back_details"
-                android:layout_width="9dp"
-                android:layout_height="16.5dp"
-                android:background="@mipmap/back_gray" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <View
-                android:id="@+id/tv_details_title_name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_collect_the_cook_data"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
-
-            <ImageView
-                android:id="@+id/iv_collection_img"
-                android:layout_width="20dp"
-                android:layout_height="20.5dp"
-                android:src="@mipmap/collection_gray" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_share_the_cook_data"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:gravity="center"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
-
-            <ImageView
-                android:id="@+id/iv_share_the_cook_data"
-                android:layout_width="19dp"
-                android:layout_height="21dp"
-                android:duplicateParentState="true"
-                android:src="@mipmap/share" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <ScrollView
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.example.guojian.weekcook.MyScrollView
         android:background="@color/white"
         android:id="@+id/scrollView_details"
         android:layout_width="fill_parent"
@@ -136,7 +65,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:lineSpacingExtra="4dp"
+                            android:lineSpacingExtra="5dp"
                             android:paddingTop="21.5dp"
                             android:text="@string/me"
                             android:textColor="@color/gray_content_color"
@@ -300,6 +229,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_end_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -318,7 +248,36 @@
                     android:gravity="center_horizontal"
                     android:paddingLeft="13dp"
                     android:paddingRight="13dp"
-                    android:text="@string/cook_details_dixian"
+                    android:text="@string/cook_details_end_message"
+                    android:textColor="@color/gray_cccccc" />
+
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray_me_line" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_end_message_screen_shot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="20dp"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray_me_line" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
+                    android:text="@string/cook_details_end_message_screen_shot"
                     android:textColor="@color/gray_cccccc" />
 
                 <View
@@ -327,6 +286,78 @@
                     android:background="@color/gray_me_line" />
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </com.example.guojian.weekcook.MyScrollView>
+    <LinearLayout
+        android:id="@+id/ll_details_title"
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        android:clipToPadding="true"
+        android:fitsSystemWindows="true"
+        android:background="@color/white_00FFFFFF"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
+        <LinearLayout
+            android:id="@+id/ll_details_back_to_list"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <ImageView
+                android:id="@+id/bn_back_details"
+                android:layout_width="9dp"
+                android:layout_height="16.5dp"
+                android:background="@mipmap/back_gray" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/tv_details_title_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_collect_the_cook_data"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <ImageView
+                android:id="@+id/iv_collection_img"
+                android:layout_width="20dp"
+                android:layout_height="20.5dp"
+                android:src="@mipmap/collection_gray" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_share_the_cook_data"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <ImageView
+                android:id="@+id/iv_share_the_cook_data"
+                android:layout_width="19dp"
+                android:layout_height="21dp"
+                android:duplicateParentState="true"
+                android:src="@mipmap/share" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
 </LinearLayout>

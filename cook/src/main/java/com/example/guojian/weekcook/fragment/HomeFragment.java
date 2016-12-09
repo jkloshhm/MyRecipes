@@ -188,6 +188,9 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+
+
+
     private void setUpViewHotClassFood() {
         //新建List
         mHotClassFoodList = new ArrayList<Map<String, Object>>();
